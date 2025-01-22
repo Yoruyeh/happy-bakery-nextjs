@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 const MemberPage = () => {
-  redirect('/member/setting');
+  redirect('/profile/setting');
 };
 
 export default MemberPage;

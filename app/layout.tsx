@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Josefin_Sans, Open_Sans } from 'next/font/google';
 import './globals.css';
+import Header from '@/components/layout/Header';
 
 const josefinSans = Josefin_Sans({
   variable: '--font-josefin-sans',
@@ -27,7 +28,8 @@ export default function RootLayout({
       <body
         className={`${josefinSans.variable} ${openSans.variable} font-sans antialiased`}
       >
-        {children}
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );

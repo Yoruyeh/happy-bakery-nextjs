@@ -10,7 +10,7 @@ export default {
     extend: {
       fontFamily: {
         josefin: ['var(--font-josefin-sans)'],
-        open: ['var(--font-open-sans)'],
+        sans: ['var(--font-open-sans)'],
       },
       colors: {
         bgColor: {

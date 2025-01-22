@@ -25,7 +25,3 @@ h5,
 h6 {
   @apply font-josefin;
 }
-
-p {
-  @apply font-open;
-}
