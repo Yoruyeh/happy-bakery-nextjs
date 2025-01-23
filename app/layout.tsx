@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${josefinSans.variable} ${openSans.variable} flex min-h-screen flex-col font-sans antialiased`}
+        className={`${josefinSans.variable} ${openSans.variable} flex h-fit min-h-screen w-screen flex-col overflow-x-hidden font-sans antialiased`}
       >
         <Header />
         <main className='flex-1'>{children}</main>

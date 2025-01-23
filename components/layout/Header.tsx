@@ -6,8 +6,6 @@ import {
   ShoppingBagIcon,
   MagnifyingGlassIcon,
   XMarkIcon,
-  ArrowRightIcon,
-  ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -15,6 +13,7 @@ import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import smallLogo from '@/public/logo-small.png';
 import bigLogo from '@/public/logo-big.png';
+import Navbar from '@/components/navbar/Navbar';
 
 type HeaderProps = {};
 
@@ -40,16 +39,18 @@ function Header({}: HeaderProps) {
   const navigateHandler = (path: string) => {
     router.push(path);
     if (isMenuOpen) toggleMenu();
+    if (isShopListOpen) toggleShopList();
   };
 
   return (
     <>
       <header
         className={twMerge(
-          'flex w-full items-center justify-between bg-white p-4',
+          'flex w-full items-center justify-between bg-white p-4 lg:px-8',
           isMenuOpen ? 'border-b-0' : 'border-b border-stone-400'
         )}
       >
+        {/* 漢堡選單 */}
         <div
           className='hamburger relative cursor-pointer lg:hidden'
           onClick={toggleMenu}
@@ -67,8 +68,17 @@ function Header({}: HeaderProps) {
             )}
           />
         </div>
+        {/* <div className='flex w-full flex-1 border border-blue-700'> */}
+        {/* Nav導航欄 */}
+        <Navbar
+          isMenuOpen={isMenuOpen}
+          isShopListOpen={isShopListOpen}
+          toggleShopList={toggleShopList}
+          navigateHandler={navigateHandler}
+        />
+        {/* Logo */}
         <div
-          className='logo h-6 w-6 cursor-pointer md:h-14 md:w-fit'
+          className='logo h-6 w-6 cursor-pointer md:h-12 md:w-fit lg:h-16 lg:flex-none'
           onClick={() => navigateHandler('/')}
         >
           <Image
@@ -82,7 +92,9 @@ function Header({}: HeaderProps) {
             className='hidden h-full w-full md:block'
           />
         </div>
-        <div className='user flex cursor-pointer items-center gap-4'>
+        {/* </div> */}
+        {/* User Icons */}
+        <div className='user flex cursor-pointer items-center justify-end gap-4 lg:flex-1'>
           <div
             className='search cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110'
             onClick={toggleSearchBar}
@@ -106,105 +118,24 @@ function Header({}: HeaderProps) {
           </div>
         </div>
       </header>
-      {/* 背景遮罩 */}
+      {/* 背景遮罩 for mobile */}
       {isMenuOpen && (
         <div
-          className='fixed inset-x-0 top-[56px] h-full bg-black opacity-30 transition-opacity duration-300 md:top-[88px]'
+          className='fixed inset-x-0 top-[56px] h-full bg-black opacity-30 transition-opacity duration-300 md:top-[80px]'
           onClick={toggleMenu}
         />
       )}
-
-      {/* Nav導航欄 */}
-      <nav
-        className={twMerge(
-          'menu transform-translate fixed left-0 top-[56px] z-50 h-[calc(100vh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out md:top-[88px] md:h-[calc(100vh-88px)]',
-          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        )}
-      >
-        <div className='relative flex h-full w-full flex-col overflow-hidden'>
-          {/* 主選單 */}
-          <ul
-            className={twMerge(
-              'absolute flex w-full transform flex-col gap-2 transition-transform duration-300 ease-in-out',
-              isShopListOpen ? '-translate-x-full' : 'translate-x-0'
-            )}
-          >
-            <li
-              className='flex cursor-pointer items-center justify-between p-4 hover:bg-slate-200'
-              onClick={toggleShopList}
-            >
-              <span>Shop</span>
-              <div>
-                <ArrowRightIcon className='h-4 w-4' />
-              </div>
-            </li>
-            <li
-              className='cursor-pointer p-4 hover:bg-slate-200'
-              onClick={() => navigateHandler('/about')}
-            >
-              Our Story
-            </li>
-            <li
-              className='cursor-pointer p-4 hover:bg-slate-200'
-              onClick={() => navigateHandler('/contact')}
-            >
-              Contact Us
-            </li>
-          </ul>
-          {/* Shop 子選單 */}
-          <ul
-            className={twMerge(
-              'absolute flex w-full transform flex-col gap-2 transition-transform duration-300 ease-in-out',
-              isShopListOpen ? 'translate-x-0' : 'translate-x-full'
-            )}
-          >
-            <li
-              className='flex cursor-pointer items-center gap-2 p-4 text-base font-normal hover:bg-slate-200'
-              onClick={toggleShopList}
-            >
-              <div>
-                <ArrowLeftIcon className='h-4 w-4' />
-              </div>
-              <span>Shop</span>
-            </li>
-            <li
-              className='cursor-pointer p-4 hover:bg-slate-200'
-              onClick={() => navigateHandler('/product/all')}
-            >
-              All Products
-            </li>
-            <li
-              className='cursor-pointer p-4 hover:bg-slate-200'
-              onClick={() => navigateHandler('/product/new')}
-            >
-              New In Products
-            </li>
-            <li
-              className='cursor-pointer p-4 hover:bg-slate-200'
-              onClick={() => navigateHandler('/product/cake')}
-            >
-              Cakes
-            </li>
-          </ul>
-          {/* 登入區塊 */}
-          <div className='mt-auto w-full'>
-            <li
-              className='group flex cursor-pointer items-center gap-4 bg-slate-200 p-6'
-              onClick={() => navigateHandler('/login')}
-            >
-              <div className='transition-transform duration-300 ease-in-out group-hover:scale-110'>
-                <UserIcon className='h-6 w-6' />
-              </div>
-              <span>Login</span>
-            </li>
-          </div>
-        </div>
-      </nav>
-
+      {/* 背景遮罩 for desktop */}
+      {isShopListOpen && (
+        <div
+          className='fixed inset-0 top-[96px] hidden bg-black opacity-30 transition-opacity duration-300 lg:block'
+          onClick={toggleShopList}
+        />
+      )}
       {/* 搜尋欄 */}
       <div
         className={twMerge(
-          'transform-translate fixed bottom-full z-50 flex h-14 w-full items-center justify-center gap-4 bg-slate-200 px-4 duration-300 ease-in-out md:h-[88px]',
+          'transform-translate fixed bottom-full z-50 flex h-14 w-full items-center justify-center gap-4 bg-slate-200 px-4 duration-300 ease-in-out md:h-[80px] lg:h-[96px]',
           isSearchBarOpen ? 'translate-y-full' : 'translate-y-0'
         )}
       >
