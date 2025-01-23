@@ -46,7 +46,7 @@ function Header({}: HeaderProps) {
     <>
       <header
         className={twMerge(
-          'flex w-full items-center justify-between bg-white p-4 lg:px-8',
+          'z-50 flex w-full items-center justify-between bg-white p-4 lg:px-8',
           isMenuOpen ? 'border-b-0' : 'border-b border-stone-400'
         )}
       >
@@ -121,14 +121,14 @@ function Header({}: HeaderProps) {
       {/* 背景遮罩 for mobile */}
       {isMenuOpen && (
         <div
-          className='fixed inset-x-0 top-[56px] h-full bg-black opacity-30 transition-opacity duration-300 md:top-[80px]'
+          className='fixed inset-x-0 top-[56px] z-40 h-full bg-black opacity-30 transition-opacity duration-300 md:top-[80px]'
           onClick={toggleMenu}
         />
       )}
       {/* 背景遮罩 for desktop */}
       {isShopListOpen && (
         <div
-          className='fixed inset-0 top-[96px] hidden bg-black opacity-30 transition-opacity duration-300 lg:block'
+          className='fixed inset-0 z-40 hidden bg-black opacity-30 transition-opacity duration-300 lg:block'
           onClick={toggleShopList}
         />
       )}

@@ -25,7 +25,7 @@ function Navbar({
   return (
     <nav
       className={twMerge(
-        'menu transform-translate fixed left-0 top-[56px] z-20 h-[calc(100vh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out',
+        'menu transform-translate fixed left-0 top-[56px] z-50 h-[calc(100vh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out',
         // Mobile styles
         isMenuOpen ? 'translate-x-0' : '-translate-x-full',
         // Ipad styles
@@ -86,7 +86,7 @@ function Navbar({
             // Mobile styles
             isShopListOpen ? 'translate-x-0' : 'translate-x-full',
             // Desktop styles
-            'lg:bg-bgColor-card lg:-left-8 lg:top-[calc(100%+26px)] lg:w-screen lg:flex-row lg:items-center lg:gap-8 lg:pl-6 lg:shadow-md lg:transition-opacity',
+            'lg:-left-8 lg:top-[calc(100%+26px)] lg:w-screen lg:flex-row lg:items-center lg:gap-8 lg:bg-gray-100 lg:pl-6 lg:shadow-md lg:transition-opacity',
             isShopListOpen ? 'lg:opacity-100' : 'lg:invisible lg:opacity-0'
           )}
         >
