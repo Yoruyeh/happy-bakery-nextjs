@@ -10,7 +10,7 @@ function Button({ text, customClass }: ButtonProps) {
     <button
       className={twMerge(
         // Basic styles
-        'h-fit w-fit rounded-lg px-4 py-3 font-medium lg:px-8 lg:py-4 lg:text-lg',
+        'rounded-lg px-4 py-3 font-medium lg:px-8 lg:py-4 lg:text-lg',
         // Custom styles
         customClass
       )}

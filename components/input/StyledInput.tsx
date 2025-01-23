@@ -1,5 +1,3 @@
-'use client';
-
 import { twMerge } from 'tailwind-merge';
 
 type InputType = 'text' | 'number' | 'date' | 'email' | 'password';
@@ -43,7 +41,7 @@ function StyledInput<T extends InputType>({
       onChange={onChange}
       className={twMerge(
         // Basic Styles
-        'rounded border border-stone-400 p-2 indent-2 shadow-md focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500',
+        'rounded border border-stone-400 p-2 indent-2 shadow-md focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 lg:p-3 lg:indent-3 lg:text-lg',
         // Custom Styles
         customClass
       )}
