@@ -109,7 +109,7 @@ function Header({}: HeaderProps) {
       {/* 背景遮罩 */}
       {isMenuOpen && (
         <div
-          className='fixed inset-x-0 h-full bg-black opacity-30 transition-opacity duration-300'
+          className='fixed inset-x-0 top-[56px] h-full bg-black opacity-30 transition-opacity duration-300 md:top-[88px]'
           onClick={toggleMenu}
         />
       )}
@@ -117,7 +117,7 @@ function Header({}: HeaderProps) {
       {/* Nav導航欄 */}
       <nav
         className={twMerge(
-          'menu transform-translate fixed left-0 z-50 h-[calc(100vh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out md:h-[calc(100vh-88px)]',
+          'menu transform-translate fixed left-0 top-[56px] z-50 h-[calc(100vh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out md:top-[88px] md:h-[calc(100vh-88px)]',
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
@@ -205,7 +205,7 @@ function Header({}: HeaderProps) {
       <div
         className={twMerge(
           'transform-translate fixed bottom-full z-50 flex h-14 w-full items-center justify-center gap-4 bg-slate-200 px-4 duration-300 ease-in-out md:h-[88px]',
-          isSearchBarOpen ? 'translate-y-0' : 'translate-y-full'
+          isSearchBarOpen ? 'translate-y-full' : 'translate-y-0'
         )}
       >
         <input

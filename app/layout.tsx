@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Josefin_Sans, Open_Sans } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 const josefinSans = Josefin_Sans({
   variable: '--font-josefin-sans',
@@ -26,10 +27,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${josefinSans.variable} ${openSans.variable} font-sans antialiased`}
+        className={`${josefinSans.variable} ${openSans.variable} flex min-h-screen flex-col font-sans antialiased`}
       >
         <Header />
-        <main>{children}</main>
+        <main className='flex-1'>{children}</main>
+        <Footer />
       </body>
     </html>
   );
