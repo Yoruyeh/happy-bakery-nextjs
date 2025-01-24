@@ -46,7 +46,7 @@ function Header({}: HeaderProps) {
     <>
       <header
         className={twMerge(
-          'z-50 flex w-full items-center justify-between bg-white p-4 lg:px-8',
+          'z-50 flex w-full items-center justify-between bg-white p-4 pr-8 lg:px-8',
           isMenuOpen ? 'border-b-0' : 'border-b border-stone-400'
         )}
       >
@@ -112,7 +112,7 @@ function Header({}: HeaderProps) {
             onClick={() => navigateHandler('/cart')}
           >
             <ShoppingBagIcon className='h-6 w-6' />
-            <span className='test-white bg-bgColor-newTag absolute -bottom-1 -right-1 h-4 w-4 rounded-full text-center text-xs font-semibold text-white'>
+            <span className='test-white absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-bgColor-newTag text-center text-xs font-semibold text-white'>
               3
             </span>
           </div>
