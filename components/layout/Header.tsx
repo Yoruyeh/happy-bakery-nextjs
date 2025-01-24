@@ -46,7 +46,7 @@ function Header({}: HeaderProps) {
     <>
       <header
         className={twMerge(
-          'z-50 flex w-full items-center justify-between bg-white p-4 pr-8 lg:px-8',
+          'fixed z-50 flex h-fit w-full items-center justify-between bg-white px-6 py-4 pr-8 md:px-8 md:pr-10 lg:px-10 lg:pr-12',
           isMenuOpen ? 'border-b-0' : 'border-b border-stone-400'
         )}
       >

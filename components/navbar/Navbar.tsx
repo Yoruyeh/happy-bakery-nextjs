@@ -86,7 +86,7 @@ function Navbar({
             // Mobile styles
             isShopListOpen ? 'translate-x-0' : 'translate-x-full',
             // Desktop styles
-            'lg:-left-8 lg:top-[calc(100%+26px)] lg:w-screen lg:flex-row lg:items-center lg:gap-8 lg:bg-gray-100 lg:pl-6 lg:shadow-md lg:transition-opacity',
+            'lg:-left-12 lg:top-[calc(100%+26px)] lg:w-screen lg:flex-row lg:items-center lg:gap-8 lg:bg-gray-100 lg:pl-6 lg:shadow-md lg:transition-opacity',
             isShopListOpen ? 'lg:opacity-100' : 'lg:invisible lg:opacity-0'
           )}
         >

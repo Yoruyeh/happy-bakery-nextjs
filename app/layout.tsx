@@ -27,10 +27,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${josefinSans.variable} ${openSans.variable} flex h-fit min-h-screen w-screen flex-col overflow-x-hidden font-sans antialiased`}
+        className={`${josefinSans.variable} ${openSans.variable} mx-auto flex h-fit min-h-screen w-screen flex-col overflow-x-hidden font-sans antialiased`}
       >
+        <div className='h-14 w-full md:h-20 lg:h-24' />
         <Header />
-        <main className='flex-1 p-4 pr-8 lg:p-8'>{children}</main>
+        <main className='flex-1 px-6 py-4 pr-8 md:px-8 md:py-8 md:pr-10 lg:px-10 lg:py-10 lg:pr-12'>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
