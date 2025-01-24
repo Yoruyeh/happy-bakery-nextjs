@@ -13,7 +13,7 @@ function ImageSwiper() {
     <Swiper
       pagination={true}
       modules={[Pagination]}
-      className='relative h-fit w-full overflow-hidden rounded-lg'
+      className='relative h-fit w-full overflow-hidden rounded-lg lg:flex-[2_2_0%]'
     >
       <SwiperSlide className='relative pt-[75%] md:pt-[56.25%]'>
         <Image
