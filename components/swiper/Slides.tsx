@@ -110,7 +110,7 @@ function Slides() {
       className='h-fit w-full'
     >
       {dummyProducts.map((product) => (
-        <SwiperSlide key={product.id} className='my-6 p-3'>
+        <SwiperSlide key={product.id} className='mb-6 mt-3 p-3'>
           <ProductCard product={product} />
         </SwiperSlide>
       ))}
