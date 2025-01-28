@@ -44,3 +44,23 @@ export async function checkoutAction(formData: globalThis.FormData) {
     nameOnCard,
   });
 }
+
+export async function settingAction(formData: globalThis.FormData) {
+  const firstName = formData.get('firstName') as string;
+  const lastName = formData.get('lastName') as string;
+  const birthday = formData.get('birthday') as string;
+  const email = formData.get('email') as string;
+  const phone = formData.get('phone') as string;
+  const address = formData.get('address') as string;
+  const gender = formData.get('gender') as string;
+
+  console.log({
+    firstName,
+    lastName,
+    birthday,
+    email,
+    address,
+    phone,
+    gender,
+  });
+}
