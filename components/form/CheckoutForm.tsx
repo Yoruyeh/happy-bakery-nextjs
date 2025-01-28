@@ -9,6 +9,20 @@ import Button from '../button/Button';
 import PaymentOptionCollapse from '@/components/collapse/PaymentOptionCollapse';
 import { twMerge } from 'tailwind-merge';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import OrderSummaryCollapse from '../collapse/OrderSummaryCollapse';
+import CheckoutItem from '../card/CheckoutItem';
+
+interface CheckoutItemType {
+  id: number;
+  name: string;
+  priceRegular: number;
+  cover: string;
+  quantity: number;
+}
+
+interface checkoutFormProps {
+  checkoutItems: CheckoutItemType[];
+}
 
 interface CheckoutFormValues {
   email: string;
@@ -89,7 +103,7 @@ function PaymentOption({
   );
 }
 
-function CheckoutForm() {
+function CheckoutForm({ checkoutItems }: checkoutFormProps) {
   const [formValues, setFormValues] = useState<CheckoutFormValues>({
     email: '',
     firstName: '',
@@ -498,6 +512,31 @@ function CheckoutForm() {
               securely.
             </p>
           </PaymentOptionCollapse>
+        </div>
+      </div>
+
+      {/*  Order Summary */}
+      <div className='lg:hidden'>
+        <OrderSummaryCollapse togglerStyle='down'>
+          <div className='mx-auto w-full max-w-lg lg:max-w-none'>
+            {checkoutItems.map((item) => (
+              <CheckoutItem key={item.id} checkoutItem={item} />
+            ))}
+          </div>
+        </OrderSummaryCollapse>
+        <div className='mx-auto flex w-full max-w-lg flex-col gap-2 p-4 lg:max-w-none'>
+          <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
+            <span>Subtotal • 3 items</span>
+            <span>$25,815.00</span>
+          </div>
+          <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
+            <span>Shipping</span>
+            <span>$1,999.00</span>
+          </div>
+          <div className='flex items-center justify-between gap-2 text-lg font-bold text-text-darkGray'>
+            <span>Totals</span>
+            <span>TWD $27,814.00</span>
+          </div>
         </div>
       </div>
 
