@@ -64,3 +64,11 @@ export async function settingAction(formData: globalThis.FormData) {
     gender,
   });
 }
+
+export async function passwordEditAction(formData: globalThis.FormData) {
+  const oldPassword = formData.get('oldPassword') as string;
+  const newPassword = formData.get('newPassword') as string;
+  const confirmPassword = formData.get('confirmPassword') as string;
+
+  console.log({ oldPassword, newPassword, confirmPassword });
+}
