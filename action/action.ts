@@ -72,3 +72,13 @@ export async function passwordEditAction(formData: globalThis.FormData) {
 
   console.log({ oldPassword, newPassword, confirmPassword });
 }
+
+export async function contactAction(formData: globalThis.FormData) {
+  // 從 FormData 中取得值
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const phone = formData.get('phone') as string;
+  const comment = formData.get('comment') as string;
+
+  console.log({ name, email, phone, comment });
+}
