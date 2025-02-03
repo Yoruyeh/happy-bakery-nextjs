@@ -13,9 +13,12 @@ interface StyledInputProps<T extends InputType> {
   value?: InputValueType<T>;
   required?: boolean;
   disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   customClass?: string;
   error?: string;
+  isTextArea?: boolean;
 }
 
 function StyledInput<T extends InputType>({
@@ -30,30 +33,42 @@ function StyledInput<T extends InputType>({
   onChange,
   customClass,
   error,
+  isTextArea,
 }: StyledInputProps<T>) {
   // 解決value和defaultValue不可同時出現：判斷input的value是否是受控制
   const isControlled = value !== undefined;
+  const commonProps = {
+    name,
+    id,
+    placeholder,
+    required,
+    disabled,
+    onChange,
+    className: twMerge(
+      // Base styles
+      'rounded border border-stone-400 p-2 indent-2 shadow-md',
+      'focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500',
+      'lg:p-3 lg:indent-3 lg:text-lg',
+      // Error styles
+      error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
+      // Custom styles
+      customClass
+    ),
+  };
 
   return (
     <>
-      <input
-        type={type}
-        name={name}
-        id={id}
-        placeholder={placeholder}
-        {...(isControlled ? { value } : { defaultValue })}
-        required={required}
-        disabled={disabled}
-        onChange={onChange}
-        className={twMerge(
-          // Basic Styles
-          'rounded border border-stone-400 p-2 indent-2 shadow-md focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 lg:p-3 lg:indent-3 lg:text-lg',
-          // Error Styles
-          error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : '',
-          // Custom Styles
-          customClass
-        )}
-      />
+      {isTextArea ? (
+        <textarea
+          {...commonProps}
+          {...(isControlled ? { value } : { defaultValue })}
+        />
+      ) : (
+        <input
+          {...commonProps}
+          {...(isControlled ? { value } : { defaultValue })}
+        />
+      )}
       {error && <span className='text-xs text-red-500'>{error}</span>}
     </>
   );
