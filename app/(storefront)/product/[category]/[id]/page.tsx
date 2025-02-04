@@ -1,6 +1,6 @@
 import Button from '@/components/button/Button';
 import ImageSwiper from '@/components/swiper/ImageSwiper';
-import Slides from '@/components/swiper/Slides';
+import Slides from '@/components/swiper/ProductSlides';
 
 type ProductDetailPageProps = {};
 

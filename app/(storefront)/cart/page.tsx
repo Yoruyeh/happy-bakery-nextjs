@@ -3,7 +3,7 @@ import CartBanner from '@/public/images/banner-cart.jpg';
 import Link from 'next/link';
 import CartItem from '@/components/card/CartItem';
 import Button from '@/components/button/Button';
-import Slides from '@/components/swiper/Slides';
+import Slides from '@/components/swiper/ProductSlides';
 
 interface CartItemType {
   id: number;

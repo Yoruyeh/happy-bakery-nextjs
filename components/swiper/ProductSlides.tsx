@@ -84,7 +84,7 @@ const dummyProducts = [
   },
 ];
 
-function Slides() {
+function ProductSlides() {
   return (
     <Swiper
       slidesPerView={1}
@@ -118,4 +118,4 @@ function Slides() {
   );
 }
 
-export default Slides;
+export default ProductSlides;
