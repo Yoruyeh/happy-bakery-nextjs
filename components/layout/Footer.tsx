@@ -30,7 +30,7 @@ function Footer({}: FooterProps) {
   };
 
   return (
-    <footer className='h-fit w-full items-center justify-between border-t border-stone-400 bg-bgColor-footer px-6 py-4 pr-8 text-text-brown md:px-8 md:py-8 md:pr-10 lg:px-10 lg:py-10 lg:pr-12'>
+    <footer className='h-fit w-full items-center justify-between border-t border-stone-400 bg-bgColor-footer px-6 py-4 text-text-brown md:px-8 md:py-8 lg:px-10 lg:py-10 lg:pr-12'>
       <ul className='flex flex-col gap-8 md:flex-row'>
         <li className='flex flex-col gap-4 md:flex-[2_2_0%]'>
           <div className='flex items-center gap-2'>

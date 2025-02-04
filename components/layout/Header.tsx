@@ -46,13 +46,13 @@ function Header({}: HeaderProps) {
     <>
       <header
         className={twMerge(
-          'fixed z-50 flex h-fit w-full items-center justify-between bg-white px-6 py-4 pr-8 md:px-8 md:pr-10 lg:px-10 lg:pr-12',
+          'fixed z-50 flex h-fit w-full items-center justify-between bg-white px-6 py-4 md:px-8 lg:px-10 lg:pr-12',
           isMenuOpen ? 'border-b-0' : 'border-b border-stone-400'
         )}
       >
         {/* 漢堡選單 */}
         <div
-          className='hamburger relative cursor-pointer lg:hidden'
+          className='relative flex-1 cursor-pointer lg:hidden'
           onClick={toggleMenu}
         >
           <Bars3Icon
@@ -68,7 +68,6 @@ function Header({}: HeaderProps) {
             )}
           />
         </div>
-        {/* <div className='flex w-full flex-1 border border-blue-700'> */}
         {/* Nav導航欄 */}
         <Navbar
           isMenuOpen={isMenuOpen}
@@ -78,7 +77,7 @@ function Header({}: HeaderProps) {
         />
         {/* Logo */}
         <div
-          className='logo h-6 w-6 cursor-pointer md:h-12 md:w-fit lg:h-16 lg:flex-none'
+          className='h-6 w-6 flex-none cursor-pointer md:h-12 md:w-fit lg:h-16'
           onClick={() => navigateHandler('/')}
         >
           <Image
@@ -92,9 +91,8 @@ function Header({}: HeaderProps) {
             className='hidden h-full w-full md:block'
           />
         </div>
-        {/* </div> */}
         {/* User Icons */}
-        <div className='user flex cursor-pointer items-center justify-end gap-4 lg:flex-1'>
+        <div className='flex flex-1 cursor-pointer items-center justify-end gap-4'>
           <div
             className='search cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110'
             onClick={toggleSearchBar}
