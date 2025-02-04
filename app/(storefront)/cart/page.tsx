@@ -93,16 +93,18 @@ const CartPage = () => {
 
   return (
     <div className='flex w-full flex-col gap-4 md:gap-6 lg:gap-8'>
-      <div className='relative w-full overflow-hidden rounded-lg pt-[25%]'>
+      <div className='absolute -left-6 top-14 h-[250px] w-[calc(100vw+32px)] md:top-20 md:h-[360px] lg:top-24 lg:h-[480px]'>
         <Image
           src={CartBanner}
-          alt='category-banner'
           fill={true}
+          alt='cart-banner'
           className='object-cover opacity-75 contrast-75'
         />
-        <div className='absolute inset-0 flex flex-col items-center justify-center gap-1 text-white'>
-          <h1 className='text-lg font-bold sm:text-3xl md:text-4xl lg:text-5xl'>
-            Baking Joy, Sharing Happiness
+      </div>
+      <div className='relative h-[250px] w-full md:h-[360px] lg:h-[480px]'>
+        <div className='absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-4 p-4'>
+          <h1 className='whitespace-nowrap text-center text-2xl font-bold uppercase text-white drop-shadow-lg md:text-4xl lg:text-5xl'>
+            Baking Joy, <br className='sm:hidden' /> Sharing Happiness
           </h1>
         </div>
       </div>
