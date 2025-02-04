@@ -25,3 +25,7 @@ h5,
 h6 {
   @apply font-josefin;
 }
+
+.no-spinners-input {
+  @apply [&::-moz-textfield]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none;
+}

@@ -61,9 +61,9 @@ const CartPage = () => {
           </p>
         </div>
         {/* Cart Table Header */}
-        <div className='grid grid-cols-[1fr_150px] gap-4 py-4 text-text-lightGray md:grid-cols-[2fr_1fr_150px] md:gap-8'>
+        <div className='grid grid-cols-[1fr_80px] gap-4 py-4 text-text-lightGray sm:grid-cols-[2fr_1fr_150px] md:gap-8'>
           <div>PRODUCT</div>
-          <div className='hidden md:block'>QUANTITY</div>
+          <div className='hidden sm:block'>QUANTITY</div>
           <div className='text-right'>TOTAL</div>
         </div>
         {/* Cart Table Itams */}

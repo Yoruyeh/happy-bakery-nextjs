@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import QantityInput from '../input/QantityInput';
 
 interface CartItem {
   id: number;
@@ -16,7 +17,7 @@ function CartItem({ cartItem }: CartItemProps) {
   const totalPrice = cartItem.quantity * cartItem.priceRegular;
 
   return (
-    <div className='grid grid-cols-[1fr_150px] gap-4 py-4 md:grid-cols-[2fr_1fr_150px] md:gap-8'>
+    <div className='grid grid-cols-[1fr_80px] gap-4 py-4 sm:grid-cols-[2fr_1fr_150px] md:gap-8'>
       {/* 商品資訊 */}
       <div className='flex gap-4'>
         {/* 商品圖片 */}
@@ -36,12 +37,16 @@ function CartItem({ cartItem }: CartItemProps) {
             ${cartItem.priceRegular}
           </p>
           {/* 手機版數量顯示 */}
-          <div className='mt-auto block md:hidden'>{cartItem.quantity}</div>
+          <div className='mt-auto block sm:hidden'>
+            <QantityInput quantity={cartItem.quantity} />
+          </div>
         </div>
       </div>
 
       {/* 桌面版數量顯示 */}
-      <div className='hidden md:flex md:items-center'>{cartItem.quantity}</div>
+      <div className='hidden sm:flex sm:items-center'>
+        <QantityInput quantity={cartItem.quantity} />
+      </div>
 
       {/* 總價格 - 固定寬度 */}
       <div className='flex items-center justify-end'>
