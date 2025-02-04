@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import CategoryBanner from '@/public/images/banner-category.jpg';
 import ProductCard from '@/components/card/ProductCard';
+import Paginator from '@/components/paginator/Paginator';
 
 const dummyProducts = [
   {
@@ -127,6 +128,7 @@ function CategoryPage() {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
+        <Paginator />
       </section>
     </div>
   );
