@@ -1,20 +1,31 @@
+import { ProductService } from '@/api/services/Product';
 import Button from '@/components/button/Button';
 import ImageSwiper from '@/components/swiper/ImageSwiper';
-import Slides from '@/components/swiper/ProductSlides';
+import ProductSlides from '@/components/swiper/ProductSlides';
 
-type ProductDetailPageProps = {};
+type Params = Promise<{ id: string }>;
 
-function ProductDetailPage({}: ProductDetailPageProps) {
+async function ProductDetailPage(props: { params: Params }) {
+  const params = await props.params;
+  const id = params.id;
+
+  const { product } = await ProductService.getProductDetail(id);
+
+  const images = [
+    { name: 'cover', image_path: product.cover },
+    ...product.ProductImages,
+  ];
+
   return (
     <div className='flex flex-col gap-4 lg:gap-8'>
       <section className='flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8'>
-        <ImageSwiper />
+        <ImageSwiper images={images} />
         <div className='flex flex-col gap-4 lg:flex-1'>
           <span className='w-fit rounded-md bg-bgColor-newTag p-2 text-sm font-medium text-white'>
             New Release
           </span>
-          <h1 className='text-3xl font-bold text-text-brown'>Chocolate Cake</h1>
-          <p className='text-xl font-bold'>$100</p>
+          <h1 className='text-3xl font-bold text-text-brown'>{product.name}</h1>
+          <p className='text-xl font-bold'>${product.price_regular}</p>
           <div className='mb-4 flex items-center gap-2 font-medium'>
             <label htmlFor='quantity'>Quantity</label>
             <select name='quantity' id='quantity' className='w-20'>
@@ -41,13 +52,7 @@ function ProductDetailPage({}: ProductDetailPageProps) {
             <h3 className='text-lg font-medium text-text-brown'>
               ABOUT THE PRODUCT
             </h3>
-            <p className='text-text-lightGray'>
-              Experience the Zen of flavors with our Matcha Cake. Every layer is
-              a dance of fine Japanese matcha and creamy richness. Its vibrant
-              green hue promises a cake that's both refreshingly earthy and
-              delightfully sweet. Dive into this fusion of tradition and taste,
-              perfect for discerning palates.
-            </p>
+            <p className='text-text-lightGray'>{product.description}</p>
           </div>
         </div>
       </section>
@@ -55,7 +60,7 @@ function ProductDetailPage({}: ProductDetailPageProps) {
         <h2 className='text-2xl font-bold text-text-brown'>
           You may also like ...
         </h2>
-        <Slides />
+        <ProductSlides />
       </section>
     </div>
   );

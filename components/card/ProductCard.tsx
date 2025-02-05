@@ -4,11 +4,12 @@ import { Product } from '@/api/types/product';
 
 interface ProductCardProps {
   product: Product;
+  category: string;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, category }: ProductCardProps) {
   return (
-    <Link href={`/product/category/${product.id}`}>
+    <Link href={`/product/${category}/${product.id}`}>
       <div className='h-fit w-full overflow-hidden rounded-xl bg-white p-3 shadow-lg hover:bg-bgColor-card'>
         <div className='relative'>
           <span className='absolute left-0 top-0 z-20 rounded-br-xl rounded-tl-xl bg-bgColor-newTag px-3 py-1 font-bold text-white'>

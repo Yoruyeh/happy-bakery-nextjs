@@ -27,3 +27,26 @@ export interface GetProductsResponse {
   productCount: number;
   products: Product[];
 }
+
+export interface ProductImage {
+  name: string;
+  image_path: string;
+}
+
+export interface ProductDetail {
+  id: number;
+  name: string;
+  cover: string;
+  stock_quantity: number;
+  price_regular: number;
+  price_sale: number;
+  description: string;
+  ProductImages: ProductImage[];
+}
+
+export interface GetProductDetailResponse {
+  status: 'success' | 'error';
+  message: string;
+  productCount: number;
+  product: ProductDetail;
+}

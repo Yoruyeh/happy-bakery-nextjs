@@ -4,7 +4,12 @@ import ProductCard from '@/components/card/ProductCard';
 import Paginator from '@/components/paginator/Paginator';
 import { ProductService } from '@/api/services/Product';
 
-async function CategoryPage() {
+type Params = Promise<{ category: string }>;
+
+async function CategoryPage(props: { params: Params }) {
+  const params = await props.params;
+  const category = params.category;
+
   const { productCount, products } = await ProductService.getProducts({
     page: 1,
   });
@@ -55,7 +60,11 @@ async function CategoryPage() {
         </div>
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              category={category}
+              product={product}
+            />
           ))}
         </div>
         <Paginator />
