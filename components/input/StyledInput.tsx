@@ -38,6 +38,7 @@ function StyledInput<T extends InputType>({
   // 解決value和defaultValue不可同時出現：判斷input的value是否是受控制
   const isControlled = value !== undefined;
   const commonProps = {
+    type,
     name,
     id,
     placeholder,

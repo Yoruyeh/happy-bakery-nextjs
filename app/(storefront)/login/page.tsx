@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { validateEmail, validatePassword } from '@/utils/validate';
 import { loginAction } from '@/action/action';
 import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormValues {
   email: string;
@@ -24,8 +26,11 @@ const LoginPage = () => {
     password: '',
   });
   const [errors, setErrors] = useState<LoginFormErrors>({});
+  const router = useRouter();
 
-  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  function inputChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
   }
@@ -57,7 +62,23 @@ const LoginPage = () => {
   async function onSubmit(formData: globalThis.FormData) {
     if (!validateForm(formData)) return;
     setFormValues({ email: '', password: '' });
-    await loginAction(formData);
+    const result = await loginAction(formData);
+
+    if (result.success) {
+      toast.success('Login success', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
+    } else {
+      toast.error('Login failed', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    }
   }
 
   return (
@@ -109,6 +130,7 @@ const LoginPage = () => {
       >
         Have no account? Create here!
       </Link>
+      <ToastContainer theme='colored' />
     </div>
   );
 };

@@ -1,11 +1,30 @@
 'use server';
 
+import { cookies } from 'next/headers';
+import { UserAuth } from '../api/services/UserAuth';
+
 export async function loginAction(formData: globalThis.FormData) {
   // 從 FormData 中取得值
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
-  console.log({ email, password });
+  try {
+    const response = await UserAuth.login({ email, password });
+    const cookieStore = await cookies();
+
+    if (response.status === 'success' && response.token) {
+      cookieStore.set('token', response.token);
+      return { success: true, message: response.message };
+    } else {
+      return { success: false, message: response.message };
+    }
+  } catch (error) {
+    console.error('Login failed:', error);
+    return {
+      success: false,
+      message: 'An unexpected error occurred during login.',
+    };
+  }
 }
 
 export async function registerAction(formData: globalThis.FormData) {
