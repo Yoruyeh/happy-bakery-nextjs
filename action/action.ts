@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { UserAuth } from '../api/services/UserAuth';
+import { redirect } from 'next/navigation';
 
 export async function loginAction(formData: globalThis.FormData) {
   // 從 FormData 中取得值
@@ -34,6 +35,13 @@ export async function registerAction(formData: globalThis.FormData) {
   const password = formData.get('password') as string;
 
   console.log({ firstName, lastName, email, password });
+}
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete('token');
+
+  return { success: true };
 }
 
 export async function checkoutAction(formData: globalThis.FormData) {
