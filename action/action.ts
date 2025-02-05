@@ -1,8 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { UserAuth } from '../api/services/UserAuth';
-import { redirect } from 'next/navigation';
+import { UserAuthService } from '../api/services/UserAuth';
 
 export async function loginAction(formData: globalThis.FormData) {
   // 從 FormData 中取得值
@@ -10,7 +9,7 @@ export async function loginAction(formData: globalThis.FormData) {
   const password = formData.get('password') as string;
 
   try {
-    const response = await UserAuth.login({ email, password });
+    const response = await UserAuthService.login({ email, password });
     const cookieStore = await cookies();
 
     if (response.status === 'success' && response.token) {

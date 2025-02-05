@@ -2,83 +2,13 @@ import Image from 'next/image';
 import CategoryBanner from '@/public/images/banner-category.jpg';
 import ProductCard from '@/components/card/ProductCard';
 import Paginator from '@/components/paginator/Paginator';
+import { ProductService } from '@/api/services/Product';
 
-const dummyProducts = [
-  {
-    id: 1,
-    name: 'cake1',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 2,
-    name: 'cake2',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 3,
-    name: 'cake3',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 4,
-    name: 'cake4',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 5,
-    name: 'cake5',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 6,
-    name: 'cake6',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 7,
-    name: 'cake7',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 8,
-    name: 'cake8',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-  {
-    id: 9,
-    name: 'cake9',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    stockQantity: 2,
-    category: { id: 1, name: 'cake' },
-  },
-];
+async function CategoryPage() {
+  const { productCount, products } = await ProductService.getProducts({
+    page: 1,
+  });
 
-function CategoryPage() {
   return (
     <div className='mx-auto w-full lg:flex lg:max-w-screen-xl lg:gap-4'>
       <nav className='hidden font-josefin text-xl font-semibold text-title-seconday lg:flex lg:w-[160px] lg:flex-col'>
@@ -121,10 +51,10 @@ function CategoryPage() {
               <option value='priceDesc'>Price: High to Low</option>
             </select>
           </div>
-          <p>20 products</p>
+          <p>{productCount} products</p>
         </div>
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-          {dummyProducts.map((product) => (
+          {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
