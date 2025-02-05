@@ -15,9 +15,11 @@ import smallLogo from '@/public/logo-small.png';
 import bigLogo from '@/public/logo-big.png';
 import Navbar from '@/components/navbar/Navbar';
 
-type HeaderProps = {};
+interface HeaderProps {
+  token: string;
+}
 
-function Header({}: HeaderProps) {
+function Header({ token }: HeaderProps) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isShopListOpen, setIsShopListOpen] = useState(false);
@@ -70,6 +72,7 @@ function Header({}: HeaderProps) {
         </div>
         {/* Nav導航欄 */}
         <Navbar
+          token={token}
           isMenuOpen={isMenuOpen}
           isShopListOpen={isShopListOpen}
           toggleShopList={toggleShopList}
@@ -101,7 +104,10 @@ function Header({}: HeaderProps) {
           </div>
           <div
             className='profile hidden cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 lg:block'
-            onClick={() => navigateHandler('/login')}
+            onClick={() => {
+              const path = !token ? '/login' : '/profile/setting';
+              navigateHandler(path);
+            }}
           >
             <UserIcon className='h-6 w-6' />
           </div>

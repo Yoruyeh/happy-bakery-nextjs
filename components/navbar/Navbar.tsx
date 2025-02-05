@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 interface NavbarProps {
+  token: string;
   isMenuOpen: boolean;
   isShopListOpen: boolean;
   toggleShopList: () => void;
@@ -17,6 +18,7 @@ interface NavbarProps {
 }
 
 function Navbar({
+  token,
   isMenuOpen,
   isShopListOpen,
   toggleShopList,
@@ -122,12 +124,15 @@ function Navbar({
         <div className='mt-auto w-full lg:hidden'>
           <li
             className='group flex cursor-pointer items-center gap-4 bg-slate-200 p-6'
-            onClick={() => navigateHandler('/login')}
+            onClick={() => {
+              const path = !token ? '/login' : '/profile/setting';
+              navigateHandler(path);
+            }}
           >
             <div className='transition-transform duration-300 ease-in-out group-hover:scale-110'>
               <UserIcon className='h-6 w-6' />
             </div>
-            <span>Login</span>
+            <span>{!token ? 'Login' : 'Profile'}</span>
           </li>
         </div>
       </div>
