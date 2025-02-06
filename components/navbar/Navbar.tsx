@@ -8,9 +8,11 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
+import { Category } from '@/api/types/product';
 
 interface NavbarProps {
   token: string;
+  categories: Category[];
   isMenuOpen: boolean;
   isShopListOpen: boolean;
   toggleShopList: () => void;
@@ -19,6 +21,7 @@ interface NavbarProps {
 
 function Navbar({
   token,
+  categories,
   isMenuOpen,
   isShopListOpen,
   toggleShopList,
@@ -113,12 +116,15 @@ function Navbar({
           >
             New In Products
           </li>
-          <li
-            className='cursor-pointer p-4 hover:bg-slate-200 lg:hover:bg-transparent lg:hover:underline'
-            onClick={() => navigateHandler('/product/cake')}
-          >
-            Cakes
-          </li>
+          {categories.map((category) => (
+            <li
+              key={category.id}
+              className='cursor-pointer p-4 hover:bg-slate-200 lg:hover:bg-transparent lg:hover:underline'
+              onClick={() => navigateHandler(`/product/${category.name}`)}
+            >
+              {category.name}
+            </li>
+          ))}
         </ul>
         {/* 登入區塊 */}
         <div className='mt-auto w-full lg:hidden'>

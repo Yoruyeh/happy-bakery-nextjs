@@ -9,13 +9,17 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
+import { Category } from '@/api/types/product';
 
-type FooterProps = {};
+interface FooterProps {
+  categories: Category[];
+}
+
 interface FooterNavState {
   [key: string]: boolean;
 }
 
-function Footer({}: FooterProps) {
+function Footer({ categories }: FooterProps) {
   const [isFooterNavOpen, setIsFooterNavOpen] = useState<FooterNavState>({
     aboutUs: false,
     category: false,
@@ -95,15 +99,11 @@ function Footer({}: FooterProps) {
               !isFooterNavOpen.category && 'hidden'
             )}
           >
-            <li className='hover:text-text-darkGray'>
-              <Link href='/product/cake'>Cake</Link>
-            </li>
-            <li className='hover:text-text-darkGray'>
-              <Link href='/product/cupcake'>CupCake</Link>
-            </li>
-            <li className='hover:text-text-darkGray'>
-              <Link href='/product/biscuit'>Biscuit</Link>
-            </li>
+            {categories.map((category) => (
+              <li key={category.id} className='hover:text-text-darkGray'>
+                <Link href={`/product/${category.name}`}>{category.name}</Link>
+              </li>
+            ))}
           </ul>
         </li>
         <li className='flex flex-col gap-4 md:flex-1'>

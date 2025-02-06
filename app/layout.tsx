@@ -4,7 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { cookies } from 'next/headers';
-import { ToastContainer } from 'react-toastify';
+import { ProductService } from '@/api/services/Product';
 
 const josefinSans = Josefin_Sans({
   variable: '--font-josefin-sans',
@@ -29,17 +29,19 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value ?? '';
 
+  const { categories } = await ProductService.getCategories();
+
   return (
     <html lang='en'>
       <body
         className={`${josefinSans.variable} ${openSans.variable} mx-auto flex h-fit min-h-screen w-screen flex-col overflow-x-hidden font-sans antialiased`}
       >
         <div className='h-14 w-full md:h-20 lg:h-24' />
-        <Header token={token} />
+        <Header token={token} categories={categories} />
         <main className='flex flex-1 flex-col px-6 py-4 md:px-8 md:py-8 lg:px-10 lg:py-10 lg:pr-12'>
           {children}
         </main>
-        <Footer />
+        <Footer categories={categories} />
       </body>
     </html>
   );

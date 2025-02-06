@@ -14,12 +14,14 @@ import { twMerge } from 'tailwind-merge';
 import smallLogo from '@/public/logo-small.png';
 import bigLogo from '@/public/logo-big.png';
 import Navbar from '@/components/navbar/Navbar';
+import { Category } from '@/api/types/product';
 
 interface HeaderProps {
   token: string;
+  categories: Category[];
 }
 
-function Header({ token }: HeaderProps) {
+function Header({ token, categories }: HeaderProps) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isShopListOpen, setIsShopListOpen] = useState(false);
@@ -73,6 +75,7 @@ function Header({ token }: HeaderProps) {
         {/* Nav導航欄 */}
         <Navbar
           token={token}
+          categories={categories}
           isMenuOpen={isMenuOpen}
           isShopListOpen={isShopListOpen}
           toggleShopList={toggleShopList}

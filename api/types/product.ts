@@ -1,3 +1,14 @@
+export interface Category {
+  id: number;
+  name: string;
+}
+
+export interface GetCategoryResponse {
+  status: 'success' | 'error';
+  message: string;
+  categories: Category[];
+}
+
 export interface ProductQuery {
   page: number;
   category?: number;
@@ -5,8 +16,11 @@ export interface ProductQuery {
   keyword?: string;
 }
 
-interface Category {
-  name: string;
+interface Pagination {
+  productCount: number;
+  currentPage: number;
+  limit: number;
+  totalPage: number;
 }
 
 export interface Product {
@@ -24,8 +38,8 @@ export interface Product {
 export interface GetProductsResponse {
   status: 'success' | 'error';
   message: string;
-  productCount: number;
   products: Product[];
+  pagination: Pagination;
 }
 
 export interface ProductImage {
