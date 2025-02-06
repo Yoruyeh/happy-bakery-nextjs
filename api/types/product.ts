@@ -16,7 +16,7 @@ export interface ProductQuery {
   keyword?: string;
 }
 
-interface Pagination {
+export interface Pagination {
   productCount: number;
   currentPage: number;
   limit: number;
