@@ -6,6 +6,7 @@ import {
   ShoppingBagIcon,
   MagnifyingGlassIcon,
   XMarkIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -15,10 +16,20 @@ import smallLogo from '@/public/logo-small.png';
 import bigLogo from '@/public/logo-big.png';
 import Navbar from '@/components/navbar/Navbar';
 import { Category } from '@/api/types/product';
+import Form from 'next/form';
+import { searchAction } from '@/action/action';
 
 interface HeaderProps {
   token: string;
   categories: Category[];
+}
+
+interface SearchFormValues {
+  keyword: string;
+}
+
+interface SearchFormErrors {
+  keyword?: string;
 }
 
 function Header({ token, categories }: HeaderProps) {
@@ -26,25 +37,67 @@ function Header({ token, categories }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isShopListOpen, setIsShopListOpen] = useState(false);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [formValues, setFormValues] = useState<SearchFormValues>({
+    keyword: '',
+  });
+  const [errors, setErrors] = useState<SearchFormErrors>({});
 
-  const toggleMenu = () => {
+  function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
     if (isShopListOpen) setIsShopListOpen(false);
-  };
+  }
 
-  const toggleShopList = () => {
+  function toggleShopList() {
     setIsShopListOpen(!isShopListOpen);
-  };
+  }
 
-  const toggleSearchBar = () => {
+  function toggleSearchBar() {
     setIsSearchBarOpen(!isSearchBarOpen);
-  };
+    setErrors({});
+    clearSearchInput();
+  }
 
-  const navigateHandler = (path: string) => {
+  function navigateHandler(path: string) {
     router.push(path);
     if (isMenuOpen) toggleMenu();
     if (isShopListOpen) toggleShopList();
-  };
+  }
+
+  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function clearSearchInput() {
+    setFormValues({
+      keyword: '',
+    });
+
+    setErrors({});
+  }
+
+  function validateForm(formData: globalThis.FormData) {
+    const newErrors: SearchFormErrors = {};
+    // 從 FormData 中取得值
+    const keyword = formData.get('keyword') as string;
+
+    // 驗證資料
+
+    if (keyword.length < 3) {
+      newErrors.keyword = 'Please enter at least 3 characters';
+    }
+
+    setErrors(newErrors);
+
+    //皆正確錯誤為0
+    return Object.keys(newErrors).length === 0;
+  }
+
+  async function onSubmit(formData: globalThis.FormData) {
+    if (!validateForm(formData)) return;
+    clearSearchInput();
+    await searchAction(formData);
+  }
 
   return (
     <>
@@ -140,21 +193,44 @@ function Header({ token, categories }: HeaderProps) {
         />
       )}
       {/* 搜尋欄 */}
-      <div
+      <Form
+        action={onSubmit}
         className={twMerge(
           'transform-translate fixed bottom-full z-50 flex h-14 w-full items-center justify-center gap-4 bg-slate-200 px-4 duration-300 ease-in-out md:h-[80px] lg:h-[96px]',
           isSearchBarOpen ? 'translate-y-full' : 'translate-y-0'
         )}
       >
-        <input
-          type='text'
-          placeholder='Search...'
-          className='w-1/2 rounded border border-slate-300 p-2 indent-2 shadow-md focus:border-sky-500 focus:outline-none focus:ring-1'
-        />
+        <div className='relative flex w-1/2 items-center justify-center'>
+          <input
+            type='text'
+            id='keyword'
+            name='keyword'
+            placeholder='Search...'
+            value={formValues.keyword}
+            className='w-full rounded border border-slate-300 p-2 pr-14 indent-2 shadow-md focus:border-sky-500 focus:outline-none focus:ring-1'
+            onChange={inputChangeHandler}
+          />
+          {formValues.keyword && (
+            <div
+              className='absolute right-8 cursor-pointer p-1'
+              onClick={clearSearchInput}
+            >
+              <XCircleIcon className='h-4 w-4' />
+            </div>
+          )}
+          <button className='absolute right-0 cursor-pointer border-l border-stone-200 p-1'>
+            <MagnifyingGlassIcon className='h-6 w-6' />
+          </button>
+          {errors.keyword && (
+            <span className='absolute left-0 top-[calc(100%+4px)] whitespace-nowrap bg-gray-50 p-1 text-xs font-medium text-red-500 shadow-sm lg:bg-transparent'>
+              {errors.keyword}
+            </span>
+          )}
+        </div>
         <div onClick={toggleSearchBar} className='cursor-pointer'>
           <XMarkIcon className='h-6 w-6' />
         </div>
-      </div>
+      </Form>
     </>
   );
 }

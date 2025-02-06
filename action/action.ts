@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { UserAuthService } from '../api/services/UserAuth';
+import { redirect } from 'next/navigation';
 
 export async function loginAction(formData: globalThis.FormData) {
   // 從 FormData 中取得值
@@ -41,6 +42,16 @@ export async function logoutAction() {
   cookieStore.delete('token');
 
   return { success: true };
+}
+
+export async function searchAction(formData: globalThis.FormData) {
+  const keyword = formData.get('keyword') as string;
+
+  const searchParams = new URLSearchParams();
+  if (keyword) {
+    searchParams.set('keyword', keyword);
+  }
+  redirect(`/product/search?${searchParams.toString()}`);
 }
 
 export async function checkoutAction(formData: globalThis.FormData) {
