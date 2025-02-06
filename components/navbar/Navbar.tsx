@@ -27,6 +27,9 @@ function Navbar({
   toggleShopList,
   navigateHandler,
 }: NavbarProps) {
+  function navItemClickHandler(categoryName: string) {
+    navigateHandler(`/product/${categoryName.toLowerCase()}`);
+  }
   return (
     <nav
       className={twMerge(
@@ -106,13 +109,13 @@ function Navbar({
           </li>
           <li
             className='cursor-pointer p-4 hover:bg-slate-200 lg:hover:bg-transparent lg:hover:underline'
-            onClick={() => navigateHandler('/product/all')}
+            onClick={() => navItemClickHandler('all')}
           >
             All Products
           </li>
           <li
             className='cursor-pointer p-4 hover:bg-slate-200 lg:hover:bg-transparent lg:hover:underline'
-            onClick={() => navigateHandler('/product/new')}
+            onClick={() => navItemClickHandler('new')}
           >
             New In Products
           </li>
@@ -120,7 +123,7 @@ function Navbar({
             <li
               key={category.id}
               className='cursor-pointer p-4 hover:bg-slate-200 lg:hover:bg-transparent lg:hover:underline'
-              onClick={() => navigateHandler(`/product/${category.name}`)}
+              onClick={() => navItemClickHandler(category.name)}
             >
               {category.name}
             </li>
