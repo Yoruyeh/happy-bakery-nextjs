@@ -1,5 +1,3 @@
-import { cookies } from 'next/headers';
-
 interface Config {
   baseUrl: string;
   headers: Record<string, string>;
@@ -25,12 +23,6 @@ export async function fetchWrapper<T>(
     ...(options?.headers as Record<string, string>),
   };
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token');
-  if (token?.value) {
-    requestHeader.Authorization = `Bearer ${token}`;
-  }
-
   try {
     const { headers: _, ...restOptions } = options || {};
 
@@ -40,11 +32,6 @@ export async function fetchWrapper<T>(
     });
 
     if (!response.ok) {
-      if (response.status === 401) {
-        cookieStore.delete('token');
-        window.location.href = '/login';
-        throw new Error('Unauthorized');
-      }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
