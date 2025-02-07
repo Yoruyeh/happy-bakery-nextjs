@@ -169,7 +169,10 @@ function Header({ token, categories }: HeaderProps) {
           </div>
           <div
             className='cart relative cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110'
-            onClick={() => navigateHandler('/cart')}
+            onClick={() => {
+              const path = !token ? '/login' : '/cart';
+              navigateHandler(path);
+            }}
           >
             <ShoppingBagIcon className='h-6 w-6' />
             <span className='test-white absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-bgColor-newTag text-center text-xs font-semibold text-white'>
