@@ -48,7 +48,8 @@ function Paginator({ pagination, pageClickHandler }: PaginatorProps) {
         className={twMerge(
           'flex h-fit w-fit items-center justify-center gap-1 rounded border border-gray-400 bg-white px-4 py-2 text-sm text-black lg:text-base',
           // Disabled styles
-          pagination.currentPage === pagination.totalPage &&
+          (pagination.currentPage === pagination.totalPage ||
+            pagination.totalPage === 0) &&
             'cursor-not-allowed border-slate-300 bg-slate-200 text-slate-500'
         )}
         onClick={() => pageClickHandler(pagination.currentPage + 1)}

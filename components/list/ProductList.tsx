@@ -4,12 +4,7 @@ import Image from 'next/image';
 import CategoryBanner from '@/public/images/banner-category.jpg';
 import ProductCard from '../card/ProductCard';
 import Paginator from '../paginator/Paginator';
-import {
-  Product,
-  Pagination,
-  Category,
-  GetProductsResponse,
-} from '@/api/types/product';
+import { GetProductsResponse } from '@/api/types/product';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ProductService } from '@/api/services/Product';
@@ -17,37 +12,29 @@ import { ProductService } from '@/api/services/Product';
 interface ProductListProps {
   initialProductData: GetProductsResponse;
   category: string;
-  categories: Category[];
+  categoryId: number | undefined;
+  keyword: string | undefined;
 }
 
 function ProductList({
   initialProductData,
   category,
-  categories,
+  categoryId,
+  keyword,
 }: ProductListProps) {
   const [sortOption, setSortOption] = useState(
     category === 'new' ? 'date_desc' : 'price_desc'
   );
   const [page, setPage] = useState(1);
 
-  function getCategoryParams(category: string) {
-    const categoryId = categories.find(
-      (c) => c.name.toLowerCase() === category
-    )?.id;
-
-    return categoryId;
-  }
-
   const { data } = useQuery({
-    queryKey: ['products', category, sortOption, page],
+    queryKey: ['products', category, sortOption, page, keyword],
     queryFn: () =>
       ProductService.getProducts({
         page,
         sort: sortOption,
-        ...(category !== 'all' &&
-          category !== 'new' && {
-            category: getCategoryParams(category),
-          }),
+        ...(keyword && { keyword }),
+        ...(categoryId && { category: categoryId }),
       }),
     initialData: initialProductData,
   });
@@ -57,7 +44,9 @@ function ProductList({
       case 'all':
         return 'All PRODUCTS';
       case 'new':
-        return 'New IN PRODUCTS';
+        return 'NEW IN PRODUCTS';
+      case 'search':
+        return `SEARCH FOR '${keyword?.toUpperCase()}'`;
       default:
         return category.toUpperCase();
     }
@@ -107,11 +96,24 @@ function ProductList({
         </div>
         <p>{data.pagination.productCount} products</p>
       </div>
-      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-        {data.products.map((product) => (
-          <ProductCard key={product.id} category={category} product={product} />
-        ))}
-      </div>
+      {data.pagination.productCount > 0 ? (
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+          {data.products.map((product) => (
+            <ProductCard
+              key={product.id}
+              category={category}
+              product={product}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className='flex w-full items-center justify-center py-20'>
+          <p className='text-2xl font-medium text-text-lightGray'>
+            No Products Found
+          </p>
+        </div>
+      )}
+
       <Paginator
         pagination={data.pagination}
         pageClickHandler={pageClickHandler}
