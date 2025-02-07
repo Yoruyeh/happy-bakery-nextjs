@@ -6,7 +6,7 @@ export interface ProductInCart {
 
 export interface CartItemType {
   quantity: number;
-  price_each: number;
+  price_each: string;
   Product: ProductInCart;
 }
 

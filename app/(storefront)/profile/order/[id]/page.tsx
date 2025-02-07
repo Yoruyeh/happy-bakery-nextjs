@@ -1,7 +1,10 @@
+import { OrderService } from '@/api/services/Order';
 import Button from '@/components/button/Button';
 import CheckoutItem from '@/components/card/CheckoutItem';
 import OrderSummaryCollapse from '@/components/collapse/OrderSummaryCollapse';
 import Link from 'next/link';
+
+type Params = Promise<{ id: string }>;
 
 interface CheckoutItemType {
   id: number;
@@ -49,31 +52,45 @@ const dummyCheckoutItems: CheckoutItemType[] = [
   },
 ];
 
-function OrderDetailPage() {
+async function OrderDetailPage(props: { params: Params }) {
+  const params = await props.params;
+  const id = Number(params.id);
+
+  const { order } = await OrderService.getOrderDetail(id);
+  const orderItemsCount = order.OrderItems.length;
+  const subtotalPrice = order.OrderItems.reduce((prevTotal, item) => {
+    return prevTotal + Number(item.price_each) * item.quantity;
+  }, 0);
+  const shippinFee = order.shipping_fee;
+  const totalPrice = order.total_price;
+
   return (
     <div className='mx-auto max-w-screen-lg'>
       <div className='flex flex-col gap-4 lg:flex-row-reverse lg:justify-center'>
         {/* Order Summary */}
         <div className='mx-auto w-full max-w-lg lg:flex-1'>
-          <OrderSummaryCollapse togglerStyle='down'>
+          <OrderSummaryCollapse
+            togglerStyle='down'
+            totalPrice={Number(order.total_price)}
+          >
             <div>
-              {dummyCheckoutItems.map((item) => (
-                <CheckoutItem key={item.id} checkoutItem={item} />
+              {order.OrderItems.map((item) => (
+                <CheckoutItem key={item.Product.id} checkoutItem={item} />
               ))}
             </div>
           </OrderSummaryCollapse>
           <div className='flex flex-col gap-2 p-4'>
             <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
-              <span>Subtotal • 3 items</span>
-              <span>$25,815.00</span>
+              <span>Subtotal • {orderItemsCount} items</span>
+              <span>${subtotalPrice.toLocaleString()}</span>
             </div>
             <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
               <span>Shipping</span>
-              <span>$1,999.00</span>
+              <span>${shippinFee.toLocaleString()}</span>
             </div>
             <div className='flex items-center justify-between gap-2 text-lg font-bold text-text-darkGray'>
               <span>Totals</span>
-              <span>TWD $27,814.00</span>
+              <span>TWD ${totalPrice.toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -115,46 +132,42 @@ function OrderDetailPage() {
           {/*  Body */}
           <div className=''>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              20250129001
+              {order.id}
             </p>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              2025-01-29
+              {order.order_date}
             </p>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              $1200
+              ${totalPrice.toLocaleString()}
             </p>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              Pending
+              {order.status}
             </p>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              John Doe
+              {order.customer_name}
             </p>
             <p className='group relative flex h-20 cursor-help items-center justify-end border-b border-stone-300 p-4'>
-              <span className='truncate text-right'>john@gmail.com</span>
+              <span className='truncate text-right'>{order.email}</span>
               {/* Tooltip */}
               <span className='absolute right-0 top-16 z-50 hidden w-60 rounded-md border bg-white p-3 text-sm shadow-lg group-hover:block'>
-                john@gmail.com
+                {order.email}
               </span>
             </p>
             <p className='group relative flex h-20 cursor-help items-center justify-end border-b border-stone-300 p-4'>
-              <span className='truncate text-right'>
-                6F., Ln. 30, Sec. 1, Fusing S. Rd., Songshan Dist., Taipei City
-                105, Taiwan dfj dsfof dskfl fdsjfkldsjf dfdsfs fdsfds
-              </span>
+              <span className='truncate text-right'>{order.address}</span>
               {/* Tooltip */}
               <span className='absolute right-0 top-16 z-50 hidden w-60 rounded-md border bg-white p-3 text-sm shadow-lg group-hover:block'>
-                6F., Ln. 30, Sec. 1, Fusing S. Rd., Songshan Dist., Taipei City
-                105, Taiwan
+                {order.address}
               </span>
             </p>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              09123456789
+              {order.phone}
             </p>
             <p className='flex h-20 items-center justify-end border-b border-stone-300 p-4'>
-              Standard
+              {order.shipping_method}
             </p>
             <p className='flex h-20 items-center justify-end p-4'>
-              Credit Card
+              {order.payment_method}
             </p>
           </div>
         </div>

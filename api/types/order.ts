@@ -6,13 +6,14 @@ export interface UserOrder {
 }
 
 export interface ProductInOrder {
+  id: number;
   name: string;
   cover: string;
 }
 
 export interface OrderItem {
   quantity: number;
-  price_each: number;
+  price_each: string;
   Product: ProductInOrder;
 }
 
@@ -94,7 +95,7 @@ export interface GetOrdersResponse {
 export interface GetOrderDetailResponse {
   status: 'success' | 'error';
   message: string;
-  order: NewOrder;
+  order: UserOrderDetail;
 }
 
 export interface CreateOrderResponse {
