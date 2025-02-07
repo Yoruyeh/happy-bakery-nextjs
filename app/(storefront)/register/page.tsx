@@ -6,13 +6,16 @@ import StyledInput from '@/components/input/StyledInput';
 import { validateEmail, validatePassword } from '@/utils/validate';
 import Form from 'next/form';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface RegisterFormValues {
   firstName?: string;
   lastName?: string;
   email: string;
   password: string;
+  termsAgreement: boolean;
 }
 
 interface RegisterFormErrors {
@@ -20,21 +23,34 @@ interface RegisterFormErrors {
   lastName?: string;
   email?: string;
   password?: string;
+  termsAgreement?: string;
 }
 
-const RegisterPage = () => {
+function RegisterPage() {
+  const router = useRouter();
   const [formValues, setFormValues] = useState<RegisterFormValues>({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
+    termsAgreement: false,
   });
 
   const [errors, setErrors] = useState<RegisterFormErrors>({});
 
-  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  function inputChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'termsAgreement') {
+      setFormValues((prev) => ({
+        ...prev,
+        [name]: !prev[name],
+      }));
+    } else {
+      setFormValues((prev) => ({ ...prev, [name]: value }));
+    }
   }
 
   function validateForm(formData: globalThis.FormData) {
@@ -42,6 +58,7 @@ const RegisterPage = () => {
     // 從 FormData 中取得值
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+    const termsAgreed = formData.has('termsAgreement');
 
     // 驗證資料
     const emailError = validateEmail(email);
@@ -53,6 +70,11 @@ const RegisterPage = () => {
 
     if (passwordError) {
       newErrors.password = passwordError;
+    }
+
+    if (!termsAgreed) {
+      newErrors.termsAgreement =
+        'Please agree to Terms & Conditions & Privacy Policy.';
     }
 
     setErrors(newErrors);
@@ -69,9 +91,26 @@ const RegisterPage = () => {
       lastName: '',
       email: '',
       password: '',
+      termsAgreement: false,
     });
 
-    await registerAction(formData);
+    const result = await registerAction(formData);
+
+    if (result.success) {
+      toast.success('Register success', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
+    } else {
+      toast.error('Register failed', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    }
   }
 
   return (
@@ -100,32 +139,36 @@ const RegisterPage = () => {
           placeholder='Email'
           value={formValues.email}
           onChange={inputChangeHandler}
-          customClass={
-            errors.email
-              ? 'border-red-500 focus:ring-red-500  focus:border-red-500'
-              : ''
-          }
+          error={errors.email}
         />
-        {errors.email && (
-          <span className='text-xs text-red-500'>{errors.email}</span>
-        )}
-
         <StyledInput
           type='password'
           name='password'
           placeholder='Password'
           value={formValues.password}
           onChange={inputChangeHandler}
-          customClass={
-            errors.password
-              ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-              : ''
-          }
+          error={errors.password}
         />
-        {errors.password && (
-          <span className='text-xs text-red-500'>{errors.password}</span>
+        <div className='flex items-start gap-3'>
+          <input
+            type='checkbox'
+            name='termsAgreement'
+            id='termsAgreement'
+            className='relative top-[2px] h-4 w-4 flex-shrink-0'
+            onChange={inputChangeHandler}
+            checked={formValues.termsAgreement === true}
+            value='true'
+          />
+          <label
+            htmlFor='termsAgreement'
+            className='text-sm text-text-darkGray'
+          >
+            I agree to happy bakery website Terms & Conditions & Privacy Policy.
+          </label>
+        </div>
+        {errors.termsAgreement && (
+          <span className='text-xs text-red-500'>{errors.termsAgreement}</span>
         )}
-
         <Button
           text='Submit'
           customClass='bg-bgColor-primaryBtn mt-5 hover:bg-bgColor-primaryHover hover:text-text-white'
@@ -137,8 +180,9 @@ const RegisterPage = () => {
       >
         Already Have an account? Login here!
       </Link>
+      <ToastContainer theme='colored' />
     </div>
   );
-};
+}
 
 export default RegisterPage;

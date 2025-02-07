@@ -35,8 +35,32 @@ export async function registerAction(formData: globalThis.FormData) {
   const lastName = formData.get('lastName') as string;
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  const termsAgreement = formData.has('termsAgreement');
 
-  console.log({ firstName, lastName, email, password });
+  try {
+    const response = await UserAuthService.register({
+      firstName,
+      lastName,
+      email,
+      password,
+      termsAgreement,
+      gender: '',
+    });
+    const cookieStore = await cookies();
+
+    if (response.status === 'success' && response.token) {
+      cookieStore.set('token', response.token);
+      return { success: true, message: response.message };
+    } else {
+      return { success: false, message: response.message };
+    }
+  } catch (error) {
+    console.error('Register failed:', error);
+    return {
+      success: false,
+      message: 'An unexpected error occurred during register.',
+    };
+  }
 }
 
 export async function logoutAction() {
