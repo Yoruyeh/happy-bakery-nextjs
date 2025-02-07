@@ -4,39 +4,17 @@ import Link from 'next/link';
 import CartItem from '@/components/card/CartItem';
 import Button from '@/components/button/Button';
 import Slides from '@/components/swiper/ProductSlides';
+import { CartService } from '@/api/services/Cart';
 
-interface CartItemType {
-  id: number;
-  name: string;
-  priceRegular: number;
-  cover: string;
-  quantity: number;
-}
+async function CartPage() {
+  const { cartItems } = await CartService.getCart();
 
-const dummyCartItems: CartItemType[] = [
-  {
-    id: 1,
-    name: 'cake1',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    quantity: 10,
-  },
-  {
-    id: 2,
-    name: 'cake2',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-];
-
-const CartPage = () => {
-  const totalPrice = dummyCartItems.reduce((prevTotal, item) => {
-    return prevTotal + item.priceRegular * item.quantity;
+  const totalPrice = cartItems.reduce((prevTotal, item) => {
+    return prevTotal + item.price_each * item.quantity;
   }, 0);
 
   let cartContent;
-  if (!dummyCartItems || dummyCartItems.length === 0) {
+  if (!cartItems || cartItems.length === 0) {
     cartContent = (
       <div className='flex flex-col items-center justify-center gap-4 px-10 py-20 text-text-brown'>
         <h1 className='text-2xl font-bold'>Your cart is empty!</h1>
@@ -68,8 +46,8 @@ const CartPage = () => {
         </div>
         {/* Cart Table Itams */}
         <div className='border-y border-stone-300'>
-          {dummyCartItems.map((item) => (
-            <CartItem key={item.id} cartItem={item} />
+          {cartItems.map((item) => (
+            <CartItem key={item.Product.id} cartItem={item} />
           ))}
         </div>
         {/* Cart Total */}
@@ -117,6 +95,6 @@ const CartPage = () => {
       </section>
     </div>
   );
-};
+}
 
 export default CartPage;
