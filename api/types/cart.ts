@@ -10,10 +10,22 @@ export interface CartItemType {
   Product: ProductInCart;
 }
 
+export interface newCartItemType {
+  productId: number;
+  quantity: number;
+  priceEach: number;
+}
+
 export interface GetCartResponse {
   status: 'success' | 'error';
   message: string;
   cartItems: CartItemType[];
+}
+
+export interface AddToCartResponse {
+  status: 'success' | 'error';
+  message: string;
+  newCartItem: newCartItemType;
 }
 
 export interface UpdateCartItemResponse {

@@ -16,7 +16,7 @@ export const ProductService = {
     return fetchWrapper<GetCategoryResponse>(`/category`);
   },
 
-  getProductDetail: async (id: string) => {
+  getProductDetail: async (id: number) => {
     return fetchWrapper<GetProductDetailResponse>(`/products/${id}`);
   },
 };
