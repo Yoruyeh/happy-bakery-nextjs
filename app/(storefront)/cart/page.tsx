@@ -1,20 +1,16 @@
 import Image from 'next/image';
 import CartBanner from '@/public/images/banner-cart.jpg';
 import Link from 'next/link';
-import CartItem from '@/components/card/CartItem';
 import Button from '@/components/button/Button';
 import Slides from '@/components/swiper/ProductSlides';
 import { CartService } from '@/api/services/Cart';
+import CartList from '@/components/list/CartList';
 
 async function CartPage() {
-  const { cartItems } = await CartService.getCart();
-
-  const totalPrice = cartItems.reduce((prevTotal, item) => {
-    return prevTotal + item.price_each * item.quantity;
-  }, 0);
+  const response = await CartService.getCart();
 
   let cartContent;
-  if (!cartItems || cartItems.length === 0) {
+  if (!response.cartItems || response.cartItems.length === 0) {
     cartContent = (
       <div className='flex flex-col items-center justify-center gap-4 px-10 py-20 text-text-brown'>
         <h1 className='text-2xl font-bold'>Your cart is empty!</h1>
@@ -27,46 +23,7 @@ async function CartPage() {
       </div>
     );
   } else {
-    cartContent = (
-      <>
-        {/* Cart Header */}
-        <div className='flex items-center justify-between gap-2 text-title-seconday'>
-          <h1 className='text-2xl font-bold md:text-3xl lg:text-4xl'>
-            Your Cart
-          </h1>
-          <p className='text-sm font-medium underline underline-offset-4 hover:decoration-2 md:text-base lg:text-lg'>
-            <Link href='/product/all'>Continue Shopping</Link>
-          </p>
-        </div>
-        {/* Cart Table Header */}
-        <div className='grid grid-cols-[1fr_80px] gap-4 py-4 text-text-lightGray sm:grid-cols-[2fr_1fr_150px] md:gap-8'>
-          <div>PRODUCT</div>
-          <div className='hidden sm:block'>QUANTITY</div>
-          <div className='text-right'>TOTAL</div>
-        </div>
-        {/* Cart Table Itams */}
-        <div className='border-y border-stone-300'>
-          {cartItems.map((item) => (
-            <CartItem key={item.Product.id} cartItem={item} />
-          ))}
-        </div>
-        {/* Cart Total */}
-        <div className='mb-4 mt-8 flex flex-col items-center justify-center gap-4 sm:justify-self-end'>
-          <div className='flex items-center justify-between gap-4 text-xl font-bold text-text-darkGray sm:items-end sm:gap-8 md:text-2xl'>
-            <h2>Total Price</h2>
-            <p className='relative bottom-[2px]'>
-              {totalPrice.toLocaleString()}
-            </p>
-          </div>
-          <Link href='/checkout' className='w-full'>
-            <Button
-              text='Check out'
-              customClass='w-full h-fit font-medium bg-bgColor-primaryBtn text-lg md:text-xl hover:bg-bgColor-primaryHover text-text-darkGray hover:text-white'
-            />
-          </Link>
-        </div>
-      </>
-    );
+    cartContent = <CartList initialCartData={response} />;
   }
 
   return (

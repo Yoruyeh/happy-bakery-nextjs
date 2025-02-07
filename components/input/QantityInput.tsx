@@ -6,27 +6,31 @@ import { useState } from 'react';
 
 interface QantityInputProps {
   quantity: number;
+  updateCartItem: (quantity: number) => void;
 }
 
-function QantityInput({ quantity }: QantityInputProps) {
+function QantityInput({ quantity, updateCartItem }: QantityInputProps) {
   const [inputValue, setInputValue] = useState(quantity);
 
   function QuantityControlHandler(action: string) {
     switch (action) {
       case 'plus':
         setInputValue((prev) => prev + 1);
+        updateCartItem(inputValue + 1);
         break;
       case 'minus':
         setInputValue((prev) => prev - 1);
+        updateCartItem(inputValue - 1);
         break;
     }
   }
 
-  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  async function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const inputValueToNumber = parseInt(e.target.value);
-    if (inputValueToNumber < 0 || inputValueToNumber > 99) return;
+    if (inputValueToNumber < 0 || inputValueToNumber > 10) return;
     if (isNaN(inputValueToNumber)) return;
     setInputValue(inputValueToNumber);
+    updateCartItem(inputValueToNumber);
   }
 
   return (
@@ -54,11 +58,11 @@ function QantityInput({ quantity }: QantityInputProps) {
           onChange={inputChangeHandler}
         />
         <button
-          disabled={inputValue === 99}
+          disabled={inputValue === 10}
           className={twMerge(
             'flex h-8 items-center justify-center border border-gray-400 bg-blue-50 px-2 text-black lg:h-10 lg:text-base',
             // Disabled Style
-            inputValue === 99 && 'bg-gray-300 text-gray-500'
+            inputValue === 10 && 'bg-gray-300 text-gray-500'
           )}
           onClick={() => QuantityControlHandler('plus')}
         >

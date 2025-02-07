@@ -1,13 +1,27 @@
 import Image from 'next/image';
 import QantityInput from '../input/QantityInput';
 import { CartItemType } from '@/api/types/cart';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CartService } from '@/api/services/Cart';
+import LoadingSpinner from '../spinner/LoadingSpinner';
 
 interface CartItemProps {
   cartItem: CartItemType;
 }
 
 function CartItem({ cartItem }: CartItemProps) {
+  const queryClient = useQueryClient();
+  const productId = cartItem.Product.id;
   const totalPrice = cartItem.quantity * cartItem.price_each;
+
+  const { mutate: updateCartItem, isPending } = useMutation({
+    mutationFn: async (quantity: number) => {
+      return await CartService.updateCartItem(productId, quantity);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cartItems'] });
+    },
+  });
 
   return (
     <div className='grid grid-cols-[1fr_80px] gap-4 py-4 sm:grid-cols-[2fr_1fr_150px] md:gap-8'>
@@ -31,21 +45,31 @@ function CartItem({ cartItem }: CartItemProps) {
           </p>
           {/* 手機版數量顯示 */}
           <div className='mt-auto block sm:hidden'>
-            <QantityInput quantity={cartItem.quantity} />
+            <QantityInput
+              quantity={cartItem.quantity}
+              updateCartItem={updateCartItem}
+            />
           </div>
         </div>
       </div>
 
       {/* 桌面版數量顯示 */}
       <div className='hidden sm:flex sm:items-center'>
-        <QantityInput quantity={cartItem.quantity} />
+        <QantityInput
+          quantity={cartItem.quantity}
+          updateCartItem={updateCartItem}
+        />
       </div>
 
       {/* 總價格 - 固定寬度 */}
       <div className='flex items-center justify-end'>
-        <span className='text-lg font-medium md:text-xl lg:text-2xl'>
-          ${totalPrice.toLocaleString()}
-        </span>
+        {isPending ? (
+          <LoadingSpinner />
+        ) : (
+          <span className='text-lg font-medium md:text-xl lg:text-2xl'>
+            ${totalPrice.toLocaleString()}
+          </span>
+        )}
       </div>
     </div>
   );
