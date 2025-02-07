@@ -12,7 +12,7 @@ async function CategoryPage(props: {
   const params = await props.params;
   const searchParams = await props.searchParams;
   const category = params.category;
-  const keyword = searchParams.keyword;
+  const { sort, page, keyword } = searchParams;
 
   const { categories } = await ProductService.getCategories();
 
@@ -24,9 +24,13 @@ async function CategoryPage(props: {
     return categoryId;
   }
 
+  const sortValue = sort ?? (category === 'new' ? 'date_desc' : 'price_desc');
+
+  const pageValue = Number(page) ?? 1;
+
   const response = await ProductService.getProducts({
-    page: 1,
-    sort: 'price_desc',
+    page: pageValue,
+    sort: sortValue,
     ...(keyword && { keyword }),
     ...(category !== 'all' &&
       category !== 'new' &&
@@ -34,8 +38,6 @@ async function CategoryPage(props: {
         category: getCategoryParams(category),
       }),
   });
-
-  console.log(response);
 
   return (
     <div className='mx-auto w-full lg:flex lg:max-w-screen-xl lg:gap-4'>
@@ -64,10 +66,10 @@ async function CategoryPage(props: {
         </ul>
       </nav>
       <ProductList
-        initialProductData={response}
+        productData={response}
         category={category}
         keyword={keyword}
-        categoryId={getCategoryParams(category)}
+        sort={sortValue}
       />
     </div>
   );

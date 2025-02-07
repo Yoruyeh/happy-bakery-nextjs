@@ -5,39 +5,24 @@ import CategoryBanner from '@/public/images/banner-category.jpg';
 import ProductCard from '../card/ProductCard';
 import Paginator from '../paginator/Paginator';
 import { GetProductsResponse } from '@/api/types/product';
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { ProductService } from '@/api/services/Product';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface ProductListProps {
-  initialProductData: GetProductsResponse;
+  productData: GetProductsResponse;
   category: string;
-  categoryId: number | undefined;
   keyword: string | undefined;
+  sort: string | undefined;
 }
 
 function ProductList({
-  initialProductData,
+  productData,
   category,
-  categoryId,
   keyword,
+  sort,
 }: ProductListProps) {
-  const [sortOption, setSortOption] = useState(
-    category === 'new' ? 'date_desc' : 'price_desc'
-  );
-  const [page, setPage] = useState(1);
-
-  const { data } = useQuery({
-    queryKey: ['products', category, sortOption, page, keyword],
-    queryFn: () =>
-      ProductService.getProducts({
-        page,
-        sort: sortOption,
-        ...(keyword && { keyword }),
-        ...(categoryId && { category: categoryId }),
-      }),
-    initialData: initialProductData,
-  });
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const path = usePathname();
 
   function showCategoryName(category: string) {
     switch (category) {
@@ -53,12 +38,21 @@ function ProductList({
   }
 
   function sortOptionHandler(e: React.ChangeEvent<HTMLSelectElement>) {
-    setSortOption(e.target.value);
+    const params = new URLSearchParams(searchParams);
+    params.set('sort', e.target.value);
+
+    const newUrl = `${path}?${params.toString()}`;
+    router.push(newUrl);
   }
 
   function pageClickHandler(page: number) {
-    if (page === 0 || page > data.pagination.totalPage) return;
-    setPage(page);
+    if (page === 0 || page > productData.pagination.totalPage) return;
+
+    const params = new URLSearchParams(searchParams);
+    params.set('page', page.toString());
+
+    const newUrl = `${path}?${params.toString()}`;
+    router.push(newUrl);
   }
 
   return (
@@ -85,7 +79,7 @@ function ProductList({
           <select
             name='sort'
             id='sort'
-            value={sortOption}
+            value={sort}
             onChange={sortOptionHandler}
           >
             <option value='date_desc'>Date: New to Old</option>
@@ -94,11 +88,11 @@ function ProductList({
             <option value='price_desc'>Price: High to Low</option>
           </select>
         </div>
-        <p>{data.pagination.productCount} products</p>
+        <p>{productData.pagination.productCount} products</p>
       </div>
-      {data.pagination.productCount > 0 ? (
+      {productData.pagination.productCount > 0 ? (
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-          {data.products.map((product) => (
+          {productData.products.map((product) => (
             <ProductCard
               key={product.id}
               category={category}
@@ -115,7 +109,7 @@ function ProductList({
       )}
 
       <Paginator
-        pagination={data.pagination}
+        pagination={productData.pagination}
         pageClickHandler={pageClickHandler}
       />
     </section>
