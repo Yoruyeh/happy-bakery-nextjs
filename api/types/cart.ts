@@ -15,3 +15,13 @@ export interface GetCartResponse {
   message: string;
   cartItems: CartItemType[];
 }
+
+export interface UpdateCartItemResponse {
+  status: 'success' | 'error';
+  message: string;
+}
+
+export interface DeleteCartItemResponse {
+  status: 'success' | 'error';
+  message: string;
+}
