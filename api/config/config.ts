@@ -1,3 +1,5 @@
+'use server';
+
 import { cookies } from 'next/headers';
 
 interface Config {
@@ -6,7 +8,7 @@ interface Config {
 }
 
 // 預設
-export const API_CONFIG: Config = {
+const API_CONFIG: Config = {
   baseUrl: process.env.NEXT_PUBLIC_API_URL ?? '',
   headers: {
     'Content-Type': 'application/JSON',
