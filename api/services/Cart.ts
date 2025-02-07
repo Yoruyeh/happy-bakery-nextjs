@@ -1,6 +1,7 @@
 import { fetchWrapper } from '../config/config';
 import {
   GetCartResponse,
+  AddProductToCartPayload,
   AddToCartResponse,
   UpdateCartItemResponse,
   DeleteCartItemResponse,
@@ -11,9 +12,10 @@ export const CartService = {
     return fetchWrapper<GetCartResponse>('/cart');
   },
 
-  addToCart: async (id: number) => {
-    return fetchWrapper<AddToCartResponse>(`/cart/${id}`, {
+  addToCart: async (payload: AddProductToCartPayload) => {
+    return fetchWrapper<AddToCartResponse>('/cart', {
       method: 'POST',
+      body: JSON.stringify(payload),
     });
   },
 

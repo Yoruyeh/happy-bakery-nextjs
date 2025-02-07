@@ -3,9 +3,10 @@ import { twMerge } from 'tailwind-merge';
 interface ButtonProps {
   text: string;
   customClass?: string;
+  onClick?: () => void;
 }
 
-function Button({ text, customClass }: ButtonProps) {
+function Button({ text, customClass, onClick }: ButtonProps) {
   return (
     <button
       className={twMerge(
@@ -14,6 +15,7 @@ function Button({ text, customClass }: ButtonProps) {
         // Custom styles
         customClass
       )}
+      onClick={onClick}
     >
       {text}
     </button>

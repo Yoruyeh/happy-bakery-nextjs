@@ -10,6 +10,12 @@ export interface CartItemType {
   Product: ProductInCart;
 }
 
+export interface AddProductToCartPayload {
+  id: number;
+  quantity: number;
+  price: number;
+}
+
 export interface newCartItemType {
   productId: number;
   quantity: number;
