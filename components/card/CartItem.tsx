@@ -23,6 +23,15 @@ function CartItem({ cartItem }: CartItemProps) {
     },
   });
 
+  const { mutate: deleteCartItem, isPending: isDeleting } = useMutation({
+    mutationFn: async () => {
+      return await CartService.deleteCartItem(productId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cartItems'] });
+    },
+  });
+
   return (
     <div className='grid grid-cols-[1fr_80px] gap-4 py-4 sm:grid-cols-[2fr_1fr_150px] md:gap-8'>
       {/* 商品資訊 */}
@@ -48,6 +57,7 @@ function CartItem({ cartItem }: CartItemProps) {
             <QantityInput
               quantity={cartItem.quantity}
               updateCartItem={updateCartItem}
+              deleteCartItem={deleteCartItem}
             />
           </div>
         </div>
@@ -58,6 +68,7 @@ function CartItem({ cartItem }: CartItemProps) {
         <QantityInput
           quantity={cartItem.quantity}
           updateCartItem={updateCartItem}
+          deleteCartItem={deleteCartItem}
         />
       </div>
 

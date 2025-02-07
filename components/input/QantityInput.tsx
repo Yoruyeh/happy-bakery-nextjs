@@ -7,9 +7,14 @@ import { useState } from 'react';
 interface QantityInputProps {
   quantity: number;
   updateCartItem: (quantity: number) => void;
+  deleteCartItem: () => void;
 }
 
-function QantityInput({ quantity, updateCartItem }: QantityInputProps) {
+function QantityInput({
+  quantity,
+  updateCartItem,
+  deleteCartItem,
+}: QantityInputProps) {
   const [inputValue, setInputValue] = useState(quantity);
 
   function QuantityControlHandler(action: string) {
@@ -31,6 +36,10 @@ function QantityInput({ quantity, updateCartItem }: QantityInputProps) {
     if (isNaN(inputValueToNumber)) return;
     setInputValue(inputValueToNumber);
     updateCartItem(inputValueToNumber);
+  }
+
+  function deleteCartItemHandler() {
+    deleteCartItem();
   }
 
   return (
@@ -69,7 +78,7 @@ function QantityInput({ quantity, updateCartItem }: QantityInputProps) {
           <PlusIcon className='h-[14px] w-[14px] md:h-4 md:w-4' />
         </button>
       </div>
-      <button>
+      <button onClick={deleteCartItemHandler}>
         <TrashIcon className='h-4 w-4 text-text-darkGray lg:h-5 lg:w-5' />
       </button>
     </div>

@@ -21,6 +21,19 @@ function CartList({ initialCartData }: CartListProps) {
     initialData: initialCartData,
   });
 
+  if (!data || data.cartItems?.length === 0)
+    return (
+      <div className='flex flex-col items-center justify-center gap-4 px-10 py-20 text-text-brown'>
+        <h1 className='text-2xl font-bold'>Your cart is empty!</h1>
+        <Link href='/product/all'>
+          <Button
+            text='Continue Shopping'
+            customClass='w-full h-fit font-medium bg-bgColor-primaryBtn text-lg md:text-xl hover:bg-bgColor-primaryHover text-text-darkGray hover:text-white max-w-sm'
+          />
+        </Link>
+      </div>
+    );
+
   const totalPrice = data.cartItems.reduce((prevTotal, item) => {
     return prevTotal + item.price_each * item.quantity;
   }, 0);

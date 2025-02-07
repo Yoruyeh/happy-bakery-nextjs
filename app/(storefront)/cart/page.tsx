@@ -1,30 +1,11 @@
 import Image from 'next/image';
 import CartBanner from '@/public/images/banner-cart.jpg';
-import Link from 'next/link';
-import Button from '@/components/button/Button';
 import Slides from '@/components/swiper/ProductSlides';
 import { CartService } from '@/api/services/Cart';
 import CartList from '@/components/list/CartList';
 
 async function CartPage() {
   const response = await CartService.getCart();
-
-  let cartContent;
-  if (!response.cartItems || response.cartItems.length === 0) {
-    cartContent = (
-      <div className='flex flex-col items-center justify-center gap-4 px-10 py-20 text-text-brown'>
-        <h1 className='text-2xl font-bold'>Your cart is empty!</h1>
-        <Link href='/product/all'>
-          <Button
-            text='Continue Shopping'
-            customClass='w-full h-fit font-medium bg-bgColor-primaryBtn text-lg md:text-xl hover:bg-bgColor-primaryHover text-text-darkGray hover:text-white max-w-sm'
-          />
-        </Link>
-      </div>
-    );
-  } else {
-    cartContent = <CartList initialCartData={response} />;
-  }
 
   return (
     <div className='flex w-full flex-col gap-4 md:gap-6 lg:gap-8'>
@@ -43,7 +24,9 @@ async function CartPage() {
           </h1>
         </div>
       </div>
-      <section className='mx-auto w-full max-w-5xl'>{cartContent}</section>
+      <section className='mx-auto w-full max-w-5xl'>
+        <CartList initialCartData={response} />
+      </section>
       <section className='mx-auto w-full max-w-5xl'>
         <h2 className='text-2xl font-bold text-text-brown'>
           Don't leave without these!
