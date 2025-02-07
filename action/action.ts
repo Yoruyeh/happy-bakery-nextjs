@@ -3,6 +3,8 @@
 import { cookies } from 'next/headers';
 import { UserAuthService } from '../api/services/UserAuth';
 import { redirect } from 'next/navigation';
+import { CreateOrderItem } from '@/api/types/order';
+import { OrderService } from '@/api/services/Order';
 
 export async function loginAction(formData: globalThis.FormData) {
   // 從 FormData 中取得值
@@ -54,7 +56,11 @@ export async function searchAction(formData: globalThis.FormData) {
   redirect(`/product/search?${searchParams.toString()}`);
 }
 
-export async function checkoutAction(formData: globalThis.FormData) {
+export async function checkoutAction(
+  formData: globalThis.FormData,
+  orderItems: CreateOrderItem[],
+  totalPrice: number
+) {
   const firstName = formData.get('firstName') as string;
   const lastName = formData.get('lastName') as string;
   const email = formData.get('email') as string;
@@ -62,24 +68,28 @@ export async function checkoutAction(formData: globalThis.FormData) {
   const phone = formData.get('phone') as string;
   const shippingMethod = formData.get('shippingMethod') as string;
   const paymentMethod = formData.get('paymentMethod') as string;
-  const cardNumber = formData.get('cardNumber') as string;
-  const expDate = formData.get('expDate') as string;
-  const securityCode = formData.get('securityCode') as string;
-  const nameOnCard = formData.get('nameOnCard') as string;
+  // const cardNumber = formData.get('cardNumber') as string;
+  // const expDate = formData.get('expDate') as string;
+  // const securityCode = formData.get('securityCode') as string;
+  // const nameOnCard = formData.get('nameOnCard') as string;
 
-  console.log({
-    firstName,
-    lastName,
-    email,
-    address,
-    phone,
-    shippingMethod,
-    paymentMethod,
-    cardNumber,
-    expDate,
-    securityCode,
-    nameOnCard,
+  const response = await OrderService.createOrder({
+    orderItems: orderItems,
+    total: totalPrice,
+    shipment: {
+      email,
+      firstName,
+      lastName,
+      address,
+      phone,
+      shippingMethod,
+    },
+    payment: {
+      paymentMethod,
+    },
   });
+
+  return response;
 }
 
 export async function settingAction(formData: globalThis.FormData) {

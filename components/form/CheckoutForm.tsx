@@ -12,6 +12,8 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import OrderSummaryCollapse from '../collapse/OrderSummaryCollapse';
 import CheckoutItem from '../card/CheckoutItem';
 import { CartItemType } from '@/api/types/cart';
+import { toast, ToastContainer } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 interface checkoutFormProps {
   checkoutItems: CartItemType[];
@@ -109,6 +111,7 @@ function CheckoutForm({
   totalPrice,
   shippingFeeHandler,
 }: checkoutFormProps) {
+  const router = useRouter();
   const [formValues, setFormValues] = useState<CheckoutFormValues>({
     email: '',
     firstName: '',
@@ -116,7 +119,7 @@ function CheckoutForm({
     phone: '',
     address: '',
     shippingMethod: '',
-    paymentMethod: 'creditCard',
+    paymentMethod: 'credit',
   });
 
   const [creditCardData, setCreditCardData] = useState<CreditCardDataType>({
@@ -242,7 +245,22 @@ function CheckoutForm({
       nameOnCard: '',
     });
 
-    await checkoutAction(formData);
+    const orderItems = checkoutItems.map((item) => ({
+      id: item.Product.id,
+      quantity: item.quantity,
+      price: Number(item.price_each),
+    }));
+
+    const result = await checkoutAction(formData, orderItems, totalPrice);
+
+    if (result.status === 'success') {
+      router.push('/finish');
+    } else {
+      toast.error(result.message, {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    }
   }
   return (
     <Form action={onSubmit} className='flex flex-col gap-6 py-4 lg:py-0'>
@@ -401,14 +419,14 @@ function CheckoutForm({
             type='radio'
             id='creditCard'
             name='paymentMethod'
-            value='creditCard'
-            checked={formValues.paymentMethod === 'creditCard'}
+            value='credit'
+            checked={formValues.paymentMethod === 'credit'}
             onChange={inputChangeHandler}
             customClass='rounded-t-lg'
           />
           <PaymentOptionCollapse
             selectedValue={formValues.paymentMethod}
-            value='creditCard'
+            value='credit'
             customClass='flex flex-col gap-2'
           >
             <StyledInput
@@ -458,13 +476,13 @@ function CheckoutForm({
             type='radio'
             id='payPal'
             name='paymentMethod'
-            value='payPal'
-            checked={formValues.paymentMethod === 'payPal'}
+            value='PayPal'
+            checked={formValues.paymentMethod === 'PayPal'}
             onChange={inputChangeHandler}
           />
           <PaymentOptionCollapse
             selectedValue={formValues.paymentMethod}
-            value='payPal'
+            value='PayPal'
             customClass='flex flex-col gap-2 justify-center items-center text-text-darkGray'
           >
             <ArrowTopRightOnSquareIcon className='h-8 w-8' />
@@ -480,13 +498,13 @@ function CheckoutForm({
             type='radio'
             id='ECPay'
             name='paymentMethod'
-            value='ECPay'
-            checked={formValues.paymentMethod === 'ECPay'}
+            value='ECPAY'
+            checked={formValues.paymentMethod === 'ECPAY'}
             onChange={inputChangeHandler}
           />
           <PaymentOptionCollapse
             selectedValue={formValues.paymentMethod}
-            value='ECPay'
+            value='ECPAY'
             customClass='flex flex-col gap-2 justify-center items-center text-text-darkGray'
           >
             <ArrowTopRightOnSquareIcon className='h-8 w-8' />
@@ -498,18 +516,18 @@ function CheckoutForm({
           </PaymentOptionCollapse>
 
           <PaymentOption
-            label='NewwebPay'
+            label='NewebPay'
             type='radio'
-            id='newwebPay'
+            id='NewebPay'
             name='paymentMethod'
-            value='newwebPay'
-            checked={formValues.paymentMethod === 'newwebPay'}
+            value='NewebPay'
+            checked={formValues.paymentMethod === 'NewebPay'}
             onChange={inputChangeHandler}
             customClass='rounded-b-lg'
           />
           <PaymentOptionCollapse
             selectedValue={formValues.paymentMethod}
-            value='newwebPay'
+            value='NewebPay'
             customClass='rounded-b-lg flex flex-col gap-2 justify-center items-center text-text-darkGray'
           >
             <ArrowTopRightOnSquareIcon className='h-8 w-8' />
@@ -551,6 +569,7 @@ function CheckoutForm({
         text='Pay Now'
         customClass='bg-bgColor-primaryBtn mt-5 hover:bg-bgColor-primaryHover hover:text-text-white'
       />
+      <ToastContainer theme='colored' />
     </Form>
   );
 }

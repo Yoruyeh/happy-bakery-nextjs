@@ -27,7 +27,7 @@ function CheckoutPage() {
   const cartItems = cartData?.cartItems ?? [];
   const itemsCount = cartItems.length;
   const subtotalPrice = cartItems.reduce((prevTotal, item) => {
-    return prevTotal + item.price_each * item.quantity;
+    return prevTotal + Number(item.price_each) * item.quantity;
   }, 0);
   const totalPrice = subtotalPrice + shippingFee;
 
