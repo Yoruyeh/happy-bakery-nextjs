@@ -2,7 +2,6 @@
 
 import { logoutAction } from '@/action/action';
 import { useRouter } from 'next/navigation';
-import { ToastContainer, toast } from 'react-toastify';
 
 function LogoutButton() {
   const router = useRouter();
@@ -10,14 +9,7 @@ function LogoutButton() {
   async function logoutHandler() {
     const result = await logoutAction();
     if (result.success) {
-      toast.success('Logout successfully', {
-        position: 'top-center',
-        autoClose: 1000,
-      });
-
-      setTimeout(() => {
-        router.push('/');
-      }, 1200);
+      router.push('/');
     }
   }
   return (
@@ -28,7 +20,6 @@ function LogoutButton() {
       >
         Logout
       </button>
-      <ToastContainer theme='colored' />
     </div>
   );
 }
