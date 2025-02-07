@@ -1,76 +1,62 @@
+'use client';
+
+import { CartService } from '@/api/services/Cart';
 import CheckoutItem from '@/components/card/CheckoutItem';
 import OrderSummaryCollapse from '@/components/collapse/OrderSummaryCollapse';
 import CheckoutForm from '@/components/form/CheckoutForm';
+import PageLoader from '@/components/spinner/PageLoader';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
-interface CheckoutItemType {
-  id: number;
-  name: string;
-  priceRegular: number;
-  cover: string;
-  quantity: number;
-}
+function CheckoutPage() {
+  const [shippingFee, setShippingFee] = useState(0);
+  const {
+    data: cartData,
+    isFetching,
+    isPending,
+  } = useQuery({
+    queryKey: ['cartItems'],
+    queryFn: async () => {
+      return await CartService.getCart();
+    },
+    refetchOnWindowFocus: false,
+  });
 
-const dummyCheckoutItems: CheckoutItemType[] = [
-  {
-    id: 1,
-    name: 'cake1',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    quantity: 10,
-  },
-  {
-    id: 2,
-    name: 'cake2',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-  {
-    id: 3,
-    name: 'cake3',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-  {
-    id: 4,
-    name: 'cake4',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-  {
-    id: 5,
-    name: 'cake5',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-];
+  if (isFetching || isPending) return <PageLoader />;
 
-const CheckoutPage = () => {
+  const cartItems = cartData?.cartItems ?? [];
+  const itemsCount = cartItems.length;
+  const subtotalPrice = cartItems.reduce((prevTotal, item) => {
+    return prevTotal + item.price_each * item.quantity;
+  }, 0);
+  const totalPrice = subtotalPrice + shippingFee;
+
+  function shippingFeeHandler(price: number) {
+    setShippingFee(price);
+  }
+
   return (
     <div className='mx-auto flex max-w-5xl flex-col lg:flex-row-reverse lg:gap-8'>
       <section className='h-fit w-full border border-stone-300 bg-blue-50 lg:sticky lg:top-28 lg:flex-[2_2_0%]'>
-        <OrderSummaryCollapse togglerStyle='up'>
+        <OrderSummaryCollapse togglerStyle='up' totalPrice={totalPrice}>
           <div className='mx-auto h-fit w-full max-w-lg lg:max-w-none'>
             <div>
-              {dummyCheckoutItems.map((item) => (
-                <CheckoutItem key={item.id} checkoutItem={item} />
+              {cartItems.map((item) => (
+                <CheckoutItem key={item.Product.id} checkoutItem={item} />
               ))}
             </div>
             <div className='flex flex-col gap-2 py-4'>
               <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
-                <span>Subtotal • 3 items</span>
-                <span>$25,815.00</span>
+                <span>Subtotal • {itemsCount} items</span>
+                <span>${subtotalPrice.toLocaleString()}</span>
               </div>
               <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
                 <span>Shipping</span>
-                <span>$1,999.00</span>
+                <span>${shippingFee.toLocaleString()}</span>
               </div>
               <div className='flex items-center justify-between gap-2 text-lg font-bold text-text-darkGray'>
                 <span>Totals</span>
-                <span>TWD $27,814.00</span>
+                <span>TWD ${totalPrice.toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -78,11 +64,18 @@ const CheckoutPage = () => {
       </section>
       <section className='w-full min-w-fit lg:max-w-none lg:flex-[3_3_0%]'>
         <div className='mx-auto w-full max-w-lg lg:max-w-none'>
-          <CheckoutForm checkoutItems={dummyCheckoutItems} />
+          <CheckoutForm
+            checkoutItems={cartItems}
+            itemsCount={itemsCount}
+            shippingFee={shippingFee}
+            subtotalPrice={subtotalPrice}
+            totalPrice={totalPrice}
+            shippingFeeHandler={shippingFeeHandler}
+          />
         </div>
       </section>
     </div>
   );
-};
+}
 
 export default CheckoutPage;

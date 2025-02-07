@@ -7,14 +7,20 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 interface CollapseTogglerProps {
   isOpen: boolean;
   togglerStyle: string;
+  totalPrice: number;
 }
 
 interface OrderSummaryCollapseProps {
   children: React.ReactNode;
   togglerStyle: string;
+  totalPrice: number;
 }
 
-function CollapseToggler({ isOpen, togglerStyle }: CollapseTogglerProps) {
+function CollapseToggler({
+  isOpen,
+  togglerStyle,
+  totalPrice,
+}: CollapseTogglerProps) {
   return (
     <>
       {togglerStyle === 'up' && (
@@ -28,7 +34,9 @@ function CollapseToggler({ isOpen, togglerStyle }: CollapseTogglerProps) {
               className={twMerge('h-4 w-4', !isOpen ? 'hidden' : 'block')}
             />
           </div>
-          <span className='text-lg font-bold'>$12345</span>
+          <span className='text-lg font-bold'>
+            ${totalPrice.toLocaleString()}
+          </span>
         </div>
       )}
       {togglerStyle === 'down' && (
@@ -59,6 +67,7 @@ function CollapseToggler({ isOpen, togglerStyle }: CollapseTogglerProps) {
 function OrderSummaryCollapse({
   children,
   togglerStyle,
+  totalPrice,
 }: OrderSummaryCollapseProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -72,7 +81,11 @@ function OrderSummaryCollapse({
         className='cursor-pointer p-4 lg:hidden'
         onClick={toggleOrderSummary}
       >
-        <CollapseToggler isOpen={isOpen} togglerStyle={togglerStyle} />
+        <CollapseToggler
+          isOpen={isOpen}
+          togglerStyle={togglerStyle}
+          totalPrice={totalPrice}
+        />
       </div>
       <div
         className={twMerge(

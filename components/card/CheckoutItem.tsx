@@ -1,19 +1,12 @@
 import Image from 'next/image';
-
-interface CheckoutItem {
-  id: number;
-  name: string;
-  priceRegular: number;
-  cover: string;
-  quantity: number;
-}
+import { CartItemType } from '@/api/types/cart';
 
 interface CheckoutItemProps {
-  checkoutItem: CheckoutItem;
+  checkoutItem: CartItemType;
 }
 
 function CheckoutItem({ checkoutItem }: CheckoutItemProps) {
-  const totalPrice = checkoutItem.quantity * checkoutItem.priceRegular;
+  const totalPrice = checkoutItem.quantity * checkoutItem.price_each;
 
   return (
     <div className='grid grid-cols-[1fr_auto] gap-4 py-4'>
@@ -22,8 +15,8 @@ function CheckoutItem({ checkoutItem }: CheckoutItemProps) {
         {/* 商品圖片 */}
         <div className='relative h-[72px] w-[72px] flex-shrink-0'>
           <Image
-            src={checkoutItem.cover}
-            alt={checkoutItem.name}
+            src={checkoutItem.Product.cover}
+            alt={checkoutItem.Product.name}
             fill={true}
             className='rounded-lg object-cover'
           />
@@ -31,7 +24,7 @@ function CheckoutItem({ checkoutItem }: CheckoutItemProps) {
             {checkoutItem.quantity}
           </span>
         </div>
-        <h3 className='text-lg font-medium'>{checkoutItem.name}</h3>
+        <h3 className='text-lg font-medium'>{checkoutItem.Product.name}</h3>
       </div>
       {/* 總價格 */}
       <div className='flex items-center justify-end'>

@@ -11,17 +11,15 @@ import { twMerge } from 'tailwind-merge';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import OrderSummaryCollapse from '../collapse/OrderSummaryCollapse';
 import CheckoutItem from '../card/CheckoutItem';
-
-interface CheckoutItemType {
-  id: number;
-  name: string;
-  priceRegular: number;
-  cover: string;
-  quantity: number;
-}
+import { CartItemType } from '@/api/types/cart';
 
 interface checkoutFormProps {
-  checkoutItems: CheckoutItemType[];
+  checkoutItems: CartItemType[];
+  itemsCount: number;
+  shippingFee: number;
+  subtotalPrice: number;
+  totalPrice: number;
+  shippingFeeHandler: (price: number) => void;
 }
 
 interface CheckoutFormValues {
@@ -57,7 +55,7 @@ interface CreditCardDataType {
 
 type InputEventType =
   | React.MouseEvent<HTMLButtonElement>
-  | React.ChangeEvent<HTMLInputElement>;
+  | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 interface paymentOptiondProps {
   label: string;
@@ -103,7 +101,14 @@ function PaymentOption({
   );
 }
 
-function CheckoutForm({ checkoutItems }: checkoutFormProps) {
+function CheckoutForm({
+  checkoutItems,
+  itemsCount,
+  shippingFee,
+  subtotalPrice,
+  totalPrice,
+  shippingFeeHandler,
+}: checkoutFormProps) {
   const [formValues, setFormValues] = useState<CheckoutFormValues>({
     email: '',
     firstName: '',
@@ -141,7 +146,7 @@ function CheckoutForm({ checkoutItems }: checkoutFormProps) {
   }
 
   function inputChangeHandlerForCreditCardData(
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     const { name, value } = e.target;
     setCreditCardData((prev) => ({ ...prev, [name]: value }));
@@ -338,9 +343,10 @@ function CheckoutForm({ checkoutItems }: checkoutFormProps) {
             // Error Style
             errors.shippingMethod ? 'border-red-500' : ''
           )}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-            inputChangeHandler(e)
-          }
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            shippingFeeHandler(60);
+            inputChangeHandler(e);
+          }}
         >
           <div className='flex flex-col items-start gap-1'>
             <p>Standard Delivery</p>
@@ -362,9 +368,10 @@ function CheckoutForm({ checkoutItems }: checkoutFormProps) {
             // Error Style
             errors.shippingMethod ? 'border-red-500' : ''
           )}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-            inputChangeHandler(e)
-          }
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            shippingFeeHandler(0);
+            inputChangeHandler(e);
+          }}
         >
           <div className='flex flex-col items-start gap-1'>
             <p>Collect in Store</p>
@@ -517,25 +524,25 @@ function CheckoutForm({ checkoutItems }: checkoutFormProps) {
 
       {/*  Order Summary */}
       <div className='lg:hidden'>
-        <OrderSummaryCollapse togglerStyle='down'>
+        <OrderSummaryCollapse togglerStyle='down' totalPrice={totalPrice}>
           <div className='mx-auto w-full max-w-lg lg:max-w-none'>
             {checkoutItems.map((item) => (
-              <CheckoutItem key={item.id} checkoutItem={item} />
+              <CheckoutItem key={item.Product.id} checkoutItem={item} />
             ))}
           </div>
         </OrderSummaryCollapse>
         <div className='mx-auto flex w-full max-w-lg flex-col gap-2 p-4 lg:max-w-none'>
           <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
-            <span>Subtotal • 3 items</span>
-            <span>$25,815.00</span>
+            <span>Subtotal • {itemsCount} items</span>
+            <span>${subtotalPrice.toLocaleString()}</span>
           </div>
           <div className='flex items-center justify-between gap-2 text-sm font-medium text-text-darkGray'>
             <span>Shipping</span>
-            <span>$1,999.00</span>
+            <span>${shippingFee.toLocaleString()}</span>
           </div>
           <div className='flex items-center justify-between gap-2 text-lg font-bold text-text-darkGray'>
             <span>Totals</span>
-            <span>TWD $27,814.00</span>
+            <span>TWD ${totalPrice.toLocaleString()}</span>
           </div>
         </div>
       </div>
