@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import QantityInput from '../input/QantityInput';
+import QuantityInputInCart from '../input/QuantityInputInCart';
 import { CartItemType } from '@/api/types/cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CartService } from '@/api/services/Cart';
@@ -54,7 +54,7 @@ function CartItem({ cartItem }: CartItemProps) {
           </p>
           {/* 手機版數量顯示 */}
           <div className='mt-auto block sm:hidden'>
-            <QantityInput
+            <QuantityInputInCart
               quantity={cartItem.quantity}
               updateCartItem={updateCartItem}
               deleteCartItem={deleteCartItem}
@@ -65,7 +65,7 @@ function CartItem({ cartItem }: CartItemProps) {
 
       {/* 桌面版數量顯示 */}
       <div className='hidden sm:flex sm:items-center'>
-        <QantityInput
+        <QuantityInputInCart
           quantity={cartItem.quantity}
           updateCartItem={updateCartItem}
           deleteCartItem={deleteCartItem}
