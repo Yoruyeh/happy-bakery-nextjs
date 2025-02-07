@@ -19,11 +19,23 @@ function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
 
   const { mutateAsync: AddCartItem } = useMutation({
     mutationFn: async () => {
-      return await CartService.addToCart({
+      const result = await CartService.addToCart({
         id: productId,
         quantity: quantityValue,
         price: productPrice,
       });
+
+      if (result.status === 'success') {
+        toast.success('Successfully added to cart! 🛒', {
+          position: 'top-center',
+          autoClose: 1000,
+        });
+      } else {
+        toast.error(result.message, {
+          position: 'top-center',
+          autoClose: 1000,
+        });
+      }
     },
   });
 
@@ -43,22 +55,7 @@ function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
   }
 
   async function addToCartHandler() {
-    try {
-      await toast.promise(
-        AddCartItem(),
-        {
-          pending: 'Adding to cart...',
-          success: 'Successfully added to cart! 🛒',
-          error: 'Failed to add to cart 😟',
-        },
-        {
-          position: 'top-center',
-          autoClose: 1500,
-        }
-      );
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-    }
+    await AddCartItem();
   }
 
   async function buyItNowHandler() {
