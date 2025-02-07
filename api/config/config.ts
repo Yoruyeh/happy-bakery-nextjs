@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 interface Config {
   baseUrl: string;
   headers: Record<string, string>;
@@ -22,6 +24,13 @@ export async function fetchWrapper<T>(
     ...API_CONFIG.headers,
     ...(options?.headers as Record<string, string>),
   };
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value ?? '';
+
+  if (token) {
+    requestHeader['Authorization'] = `Bearer ${token}`;
+  }
 
   try {
     const { headers: _, ...restOptions } = options || {};
