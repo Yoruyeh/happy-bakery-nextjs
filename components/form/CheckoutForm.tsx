@@ -253,7 +253,7 @@ function CheckoutForm({
 
     const result = await checkoutAction(formData, orderItems, totalPrice);
 
-    if (result.status === 'success') {
+    if (result.success) {
       router.push('/finish');
     } else {
       toast.error(result.message, {

@@ -97,23 +97,35 @@ export async function checkoutAction(
   // const securityCode = formData.get('securityCode') as string;
   // const nameOnCard = formData.get('nameOnCard') as string;
 
-  const response = await OrderService.createOrder({
-    orderItems: orderItems,
-    total: totalPrice,
-    shipment: {
-      email,
-      firstName,
-      lastName,
-      address,
-      phone,
-      shippingMethod,
-    },
-    payment: {
-      paymentMethod,
-    },
-  });
+  try {
+    const response = await OrderService.createOrder({
+      orderItems: orderItems,
+      total: totalPrice,
+      shipment: {
+        email,
+        firstName,
+        lastName,
+        address,
+        phone,
+        shippingMethod,
+      },
+      payment: {
+        paymentMethod,
+      },
+    });
 
-  return response;
+    if (response.status === 'success') {
+      return { success: true, message: response.message };
+    } else {
+      return { success: false, message: response.message };
+    }
+  } catch (error) {
+    console.error('Checkout failed:', error);
+    return {
+      success: false,
+      message: 'An unexpected error occurred during checkout.',
+    };
+  }
 }
 
 export async function settingAction(formData: globalThis.FormData) {
