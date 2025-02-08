@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { CartService } from '@/api/services/Cart';
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import useStore from '@/store/store';
 
 interface AddToCartActionProps {
   productId: number;
@@ -15,27 +16,18 @@ interface AddToCartActionProps {
 
 function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
   const router = useRouter();
+  const increaseCartItemsCount = useStore(
+    (state) => state.increaseCartItemsCount
+  );
   const [quantityValue, setQuantityValue] = useState(1);
 
   const { mutateAsync: AddCartItem } = useMutation({
     mutationFn: async () => {
-      const result = await CartService.addToCart({
+      return await CartService.addToCart({
         id: productId,
         quantity: quantityValue,
         price: productPrice,
       });
-
-      if (result.status === 'success') {
-        toast.success('Successfully added to cart! 🛒', {
-          position: 'top-center',
-          autoClose: 1000,
-        });
-      } else {
-        toast.error(result.message, {
-          position: 'top-center',
-          autoClose: 1000,
-        });
-      }
     },
   });
 
@@ -55,7 +47,19 @@ function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
   }
 
   async function addToCartHandler() {
-    await AddCartItem();
+    const result = await AddCartItem();
+    if (result.status === 'success') {
+      toast.success('Successfully added to cart! 🛒', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+      increaseCartItemsCount();
+    } else {
+      toast.error(result.message, {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    }
   }
 
   async function buyItNowHandler() {

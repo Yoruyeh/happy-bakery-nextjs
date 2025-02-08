@@ -3,6 +3,7 @@
 import { twMerge } from 'tailwind-merge';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import useStore from '@/store/store';
 
 interface QuantityInputInCartProps {
   quantity: number;
@@ -15,6 +16,9 @@ function QuantityInputInCart({
   updateCartItem,
   deleteCartItem,
 }: QuantityInputInCartProps) {
+  const decreaseCartItemsCount = useStore(
+    (state) => state.decreaseCartItemsCount
+  );
   const [inputValue, setInputValue] = useState(quantity);
 
   function QuantityControlHandler(action: string) {
@@ -40,6 +44,7 @@ function QuantityInputInCart({
 
   function deleteCartItemHandler() {
     deleteCartItem();
+    decreaseCartItemsCount();
   }
 
   return (

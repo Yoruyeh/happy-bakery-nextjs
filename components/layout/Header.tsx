@@ -18,6 +18,7 @@ import Navbar from '@/components/navbar/Navbar';
 import { Category } from '@/api/types/product';
 import Form from 'next/form';
 import { searchAction } from '@/action/action';
+import useStore from '@/store/store';
 
 interface HeaderProps {
   token: string;
@@ -41,6 +42,7 @@ function Header({ token, categories }: HeaderProps) {
     keyword: '',
   });
   const [errors, setErrors] = useState<SearchFormErrors>({});
+  const cartItemsCount = useStore((state) => state.cartItemsCount);
 
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
@@ -175,9 +177,11 @@ function Header({ token, categories }: HeaderProps) {
             }}
           >
             <ShoppingBagIcon className='h-6 w-6' />
-            <span className='test-white absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-bgColor-newTag text-center text-xs font-semibold text-white'>
-              3
-            </span>
+            {token && (
+              <span className='test-white absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-bgColor-newTag text-center text-xs font-semibold text-white'>
+                {cartItemsCount}
+              </span>
+            )}
           </div>
         </div>
       </header>

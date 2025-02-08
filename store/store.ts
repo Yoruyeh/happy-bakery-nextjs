@@ -7,6 +7,9 @@ interface StoreState {
 }
 
 interface StoreAction {
+  increaseCartItemsCount: () => void;
+  decreaseCartItemsCount: () => void;
+  resetCartItemsCount: () => void;
   setCartItemsCount: (cartItemsCount: StoreState['cartItemsCount']) => void;
   setNewProducts: (newProducts: StoreState['newProducts']) => void;
 }
@@ -14,6 +17,11 @@ interface StoreAction {
 const useStore = create<StoreState & StoreAction>((set) => ({
   cartItemsCount: 0,
   newProducts: [],
+  increaseCartItemsCount: () =>
+    set((state) => ({ cartItemsCount: state.cartItemsCount + 1 })),
+  decreaseCartItemsCount: () =>
+    set((state) => ({ cartItemsCount: state.cartItemsCount - 1 })),
+  resetCartItemsCount: () => set(() => ({ cartItemsCount: 0 })),
   setCartItemsCount: (cartItemsCount) => set(() => ({ cartItemsCount })),
   setNewProducts: (newProducts) => set(() => ({ newProducts })),
 }));

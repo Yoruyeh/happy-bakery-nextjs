@@ -14,6 +14,7 @@ import CheckoutItem from '../card/CheckoutItem';
 import { CartItemType } from '@/api/types/cart';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import useStore from '@/store/store';
 
 interface checkoutFormProps {
   checkoutItems: CartItemType[];
@@ -111,6 +112,7 @@ function CheckoutForm({
   totalPrice,
   shippingFeeHandler,
 }: checkoutFormProps) {
+  const resetCartItemsCount = useStore((state) => state.resetCartItemsCount);
   const router = useRouter();
   const [formValues, setFormValues] = useState<CheckoutFormValues>({
     email: '',
@@ -255,6 +257,7 @@ function CheckoutForm({
 
     if (result.success) {
       router.push('/finish');
+      resetCartItemsCount();
     } else {
       toast.error(result.message, {
         position: 'top-center',
