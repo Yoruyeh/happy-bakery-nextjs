@@ -6,6 +6,7 @@ import Form from 'next/form';
 import { useState } from 'react';
 import StyledInput from '../input/StyledInput';
 import Button from '../button/Button';
+import NotifyModal from '../modal/NotifyModal';
 
 interface ContactFormValues {
   name?: string;
@@ -30,6 +31,7 @@ function ContactForm() {
   });
 
   const [errors, setErrors] = useState<ContactFormErrors>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function inputChangeHandler(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,7 +74,11 @@ function ContactForm() {
       comment: '',
     });
 
-    await contactAction(formData);
+    const result = await contactAction(formData);
+
+    if (result.success) {
+      setIsModalOpen(true);
+    }
   }
   return (
     <Form action={onSubmit}>
@@ -123,6 +129,15 @@ function ContactForm() {
           customClass='w-fit mt-5 font-medium bg-bgColor-primaryBtn hover:bg-bgColor-primaryHover text-text-darkGray hover:text-white'
         />
       </div>
+      {isModalOpen && (
+        <NotifyModal
+          onClose={() => setIsModalOpen(false)}
+          data={{
+            title: 'Thank you for your message!',
+            text: 'We will get back to you soon.',
+          }}
+        />
+      )}
     </Form>
   );
 }

@@ -196,4 +196,5 @@ export async function contactAction(formData: globalThis.FormData) {
   const comment = formData.get('comment') as string;
 
   console.log({ name, email, phone, comment });
+  return { success: true };
 }
