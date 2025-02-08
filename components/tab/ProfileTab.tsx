@@ -65,7 +65,11 @@ function ProfileTab() {
 
   function isActiveTab(tabPath: string): boolean {
     const [path, queryString] = tabPath.split('?');
-    if (pathname !== path) return false;
+    if (
+      (pathname.includes('password') && path === '/profile/setting') ||
+      pathname.includes(path)
+    )
+      return true;
 
     if (queryString) {
       const tabSearchParams = new URLSearchParams(queryString);
@@ -75,7 +79,7 @@ function ProfileTab() {
       return currentType === tabType;
     }
 
-    return true;
+    return false;
   }
 
   return (

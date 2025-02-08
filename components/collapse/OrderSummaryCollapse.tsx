@@ -89,7 +89,7 @@ function OrderSummaryCollapse({
       </div>
       <div
         className={twMerge(
-          'px-4 transition-all duration-1000 ease-in-out lg:max-h-[500px] lg:overflow-y-scroll',
+          'bg-slate-50 px-4 transition-all duration-1000 ease-in-out lg:max-h-[500px] lg:overflow-y-scroll',
           isOpen
             ? 'max-h-[500px] overflow-y-scroll border-t'
             : 'max-h-0 overflow-hidden'

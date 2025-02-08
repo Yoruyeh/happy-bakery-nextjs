@@ -14,44 +14,6 @@ interface CheckoutItemType {
   quantity: number;
 }
 
-const dummyCheckoutItems: CheckoutItemType[] = [
-  {
-    id: 1,
-    name: 'cake1',
-    priceRegular: 100,
-    cover: '/images/cake1.jpg',
-    quantity: 10,
-  },
-  {
-    id: 2,
-    name: 'cake2',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-  {
-    id: 3,
-    name: 'cake3',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-  {
-    id: 4,
-    name: 'cake4',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-  {
-    id: 5,
-    name: 'cake5',
-    priceRegular: 80,
-    cover: '/images/cake1.jpg',
-    quantity: 3,
-  },
-];
-
 async function OrderDetailPage(props: { params: Params }) {
   const params = await props.params;
   const id = Number(params.id);
