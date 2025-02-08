@@ -101,7 +101,9 @@ function Footer({ categories }: FooterProps) {
           >
             {categories.map((category) => (
               <li key={category.id} className='hover:text-text-darkGray'>
-                <Link href={`/product/${category.name}`}>{category.name}</Link>
+                <Link href={`/product/${category.name.toLowerCase()}`}>
+                  {category.name}
+                </Link>
               </li>
             ))}
           </ul>
