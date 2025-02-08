@@ -12,9 +12,14 @@ import useStore from '@/store/store';
 interface AddToCartActionProps {
   productId: number;
   productPrice: number;
+  token: string;
 }
 
-function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
+function AddToCartAction({
+  token,
+  productId,
+  productPrice,
+}: AddToCartActionProps) {
   const router = useRouter();
   const increaseCartItemsCount = useStore(
     (state) => state.increaseCartItemsCount
@@ -47,6 +52,17 @@ function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
   }
 
   async function addToCartHandler() {
+    if (!token) {
+      toast.warning('Please login first!', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+      setTimeout(() => {
+        router.push('/login');
+      }, 1200);
+      return;
+    }
+
     const result = await AddCartItem();
     if (result.status === 'success') {
       toast.success('Successfully added to cart! 🛒', {
@@ -63,6 +79,16 @@ function AddToCartAction({ productId, productPrice }: AddToCartActionProps) {
   }
 
   async function buyItNowHandler() {
+    if (!token) {
+      toast.warning('Please login first!', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+      setTimeout(() => {
+        router.push('/login');
+      }, 1200);
+      return;
+    }
     await AddCartItem();
     router.push('/checkout');
   }

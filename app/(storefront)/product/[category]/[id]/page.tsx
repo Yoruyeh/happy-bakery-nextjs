@@ -3,10 +3,13 @@ import AddToCartAction from '@/components/action/AddToCartAction';
 import ImageSwiper from '@/components/swiper/ImageSwiper';
 import ProductSlides from '@/components/swiper/ProductSlides';
 import NewReleaseTag from '@/components/tag/NewReleaseTag';
+import { cookies } from 'next/headers';
 
 type Params = Promise<{ id: string }>;
 
 async function ProductDetailPage(props: { params: Params }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value ?? '';
   const params = await props.params;
   const id = Number(params.id);
 
@@ -26,6 +29,7 @@ async function ProductDetailPage(props: { params: Params }) {
           <h1 className='text-3xl font-bold text-text-brown'>{product.name}</h1>
           <p className='text-xl font-bold'>${product.price_regular}</p>
           <AddToCartAction
+            token={token}
             productId={id}
             productPrice={product.price_regular}
           />
