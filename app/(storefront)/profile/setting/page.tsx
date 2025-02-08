@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import Form from 'next/form';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
 
 interface ProfileSettingFormValues {
@@ -81,14 +82,8 @@ function SettingPage() {
     const newErrors: ProfileSettingFormErrors = {};
     // 從 FormData 中取得值
 
-    const firstName = formData.get('firstName') as string;
-    const lastName = formData.get('lastName') as string;
-    const birthday = formData.get('birthday') as string;
     const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
-    const address = formData.get('address') as string;
-    const gender = formData.get('gender') as string;
-
     // 驗證資料
     const emailError = validateEmail(email);
 
@@ -96,28 +91,8 @@ function SettingPage() {
       newErrors.email = emailError;
     }
 
-    if (!firstName.trim()) {
-      newErrors.firstName = 'First Name is required';
-    }
-
-    if (!lastName.trim()) {
-      newErrors.lastName = 'Last Name is required';
-    }
-
-    if (!address.trim()) {
-      newErrors.address = 'Address is required';
-    }
-
-    if (!phone.trim()) {
-      newErrors.phone = 'Phone is required';
-    }
-
-    if (!birthday) {
-      newErrors.birthday = 'Birthday is required';
-    }
-
-    if (!gender) {
-      newErrors.gender = 'Gender is required';
+    if (phone.trim().length > 10 || phone.trim().length < 8) {
+      newErrors.phone = 'Phone number is invalid';
     }
 
     setErrors(newErrors);
@@ -129,7 +104,19 @@ function SettingPage() {
   async function onSubmit(formData: globalThis.FormData) {
     if (!validateForm(formData)) return;
 
-    await settingAction(formData);
+    const result = await settingAction(formData);
+
+    if (result.success) {
+      toast.success(result.message, {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    } else {
+      toast.error(result.message, {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    }
   }
 
   if (isPending || isLoading || !userInfo?.user) return <PageLoader />;
@@ -143,7 +130,6 @@ function SettingPage() {
         <div className='flex flex-col gap-4 md:grid md:grid-cols-3'>
           <div className='flex flex-col gap-2 md:col-span-1'>
             <label htmlFor='firstName' className='text-lg font-medium'>
-              <span className='text-sm text-red-500'>* </span>
               First Name
             </label>
             <StyledInput
@@ -158,7 +144,6 @@ function SettingPage() {
           </div>
           <div className='flex flex-col gap-2 md:col-span-1'>
             <label htmlFor='firstName' className='text-lg font-medium'>
-              <span className='text-sm text-red-500'>* </span>
               Last Name
             </label>
             <StyledInput
@@ -173,7 +158,6 @@ function SettingPage() {
           </div>
           <div className='flex flex-col gap-2 md:col-span-1'>
             <label htmlFor='birthday' className='text-lg font-medium'>
-              <span className='text-sm text-red-500'>* </span>
               Birthday
             </label>
             <StyledInput
@@ -217,7 +201,6 @@ function SettingPage() {
           </div>
           <div className='flex flex-col gap-2 md:col-span-1'>
             <label htmlFor='phone' className='text-lg font-medium'>
-              <span className='text-sm text-red-500'>* </span>
               Phone
             </label>
             <StyledInput
@@ -232,7 +215,6 @@ function SettingPage() {
           </div>
           <div className='flex flex-col gap-2 md:col-span-1'>
             <label htmlFor='gender' className='text-lg font-medium'>
-              <span className='text-sm text-red-500'>* </span>
               Gender
             </label>
             <div
@@ -244,42 +226,42 @@ function SettingPage() {
               <div className='flex items-center gap-2'>
                 <input
                   type='radio'
-                  id='gender'
+                  id='male'
                   name='gender'
-                  value='M'
+                  value='male'
                   className='h-4 w-4'
-                  checked={formValues.gender === 'M'}
+                  checked={formValues.gender === 'male'}
                   onChange={inputChangeHandler}
                 />
-                <label htmlFor='gender' className='text-lg font-medium'>
+                <label htmlFor='male' className='text-lg font-medium'>
                   Male
                 </label>
               </div>
               <div className='flex items-center gap-2'>
                 <input
                   type='radio'
-                  id='gender'
+                  id='female'
                   name='gender'
-                  value='F'
+                  value='female'
                   className='h-4 w-4'
-                  checked={formValues.gender === 'F'}
+                  checked={formValues.gender === 'female'}
                   onChange={inputChangeHandler}
                 />
-                <label htmlFor='gender' className='text-lg font-medium'>
+                <label htmlFor='female' className='text-lg font-medium'>
                   Female
                 </label>
               </div>
               <div className='flex items-center gap-2'>
                 <input
                   type='radio'
-                  id='gender'
+                  id='other'
                   name='gender'
-                  value='O'
+                  value='other'
                   className='h-4 w-4'
-                  checked={formValues.gender === 'O'}
+                  checked={formValues.gender === 'other'}
                   onChange={inputChangeHandler}
                 />
-                <label htmlFor='gender' className='text-lg font-medium'>
+                <label htmlFor='other' className='text-lg font-medium'>
                   Other
                 </label>
               </div>
@@ -305,6 +287,7 @@ function SettingPage() {
           />
         </div>
       </Form>
+      <ToastContainer theme='colored' />
     </div>
   );
 }

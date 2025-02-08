@@ -52,3 +52,19 @@ export interface UserInfo {
 export interface UserInfoResponse {
   user: UserInfo;
 }
+
+export interface UpdateUserInfoPayload {
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  email: string;
+  address?: string;
+  phone?: string;
+  birthday?: string;
+}
+
+export interface UpdateUserInfoResponse {
+  status: 'success' | 'error';
+  message: string;
+  user: UserInfo;
+}

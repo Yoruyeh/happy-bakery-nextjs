@@ -125,15 +125,29 @@ export async function settingAction(formData: globalThis.FormData) {
   const address = formData.get('address') as string;
   const gender = formData.get('gender') as string;
 
-  console.log({
-    firstName,
-    lastName,
-    birthday,
-    email,
-    address,
-    phone,
-    gender,
-  });
+  try {
+    const response = await UserService.updateUserInfo({
+      firstName,
+      lastName,
+      email,
+      address,
+      phone,
+      gender,
+      birthday,
+    });
+
+    if (response.status === 'success') {
+      return { success: true, message: response.message };
+    } else {
+      return { success: false, message: response.message };
+    }
+  } catch (error) {
+    console.error('Update Personal Info failed:', error);
+    return {
+      success: false,
+      message: 'An unexpected error occurred during update personal info.',
+    };
+  }
 }
 
 export async function passwordEditAction(formData: globalThis.FormData) {
