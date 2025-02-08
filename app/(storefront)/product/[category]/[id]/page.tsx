@@ -2,6 +2,7 @@ import { ProductService } from '@/api/services/Product';
 import AddToCartAction from '@/components/action/AddToCartAction';
 import ImageSwiper from '@/components/swiper/ImageSwiper';
 import ProductSlides from '@/components/swiper/ProductSlides';
+import NewReleaseTag from '@/components/tag/NewReleaseTag';
 
 type Params = Promise<{ id: string }>;
 
@@ -21,9 +22,7 @@ async function ProductDetailPage(props: { params: Params }) {
       <section className='flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8'>
         <ImageSwiper images={images} />
         <div className='flex flex-col gap-4 lg:flex-1'>
-          <span className='w-fit rounded-md bg-bgColor-newTag p-2 text-sm font-medium text-white'>
-            New Release
-          </span>
+          <NewReleaseTag productId={id} />
           <h1 className='text-3xl font-bold text-text-brown'>{product.name}</h1>
           <p className='text-xl font-bold'>${product.price_regular}</p>
           <AddToCartAction
