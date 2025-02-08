@@ -6,6 +6,8 @@ import Footer from '@/components/layout/Footer';
 import { cookies } from 'next/headers';
 import { ProductService } from '@/api/services/Product';
 import Providers from '@/provider/provider';
+import StoreInitializer from '@/store/StoreInitializer';
+import { CartService } from '@/api/services/Cart';
 
 const josefinSans = Josefin_Sans({
   variable: '--font-josefin-sans',
@@ -29,8 +31,20 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value ?? '';
-
+  const { products } = await ProductService.getProducts({
+    page: 1,
+    sort: 'date_desc',
+  });
   const { categories } = await ProductService.getCategories();
+
+  const newProducts = products.slice();
+
+  let cartItemsCount = 0;
+
+  if (token) {
+    const { cartItems } = await CartService.getCart();
+    cartItemsCount = cartItems.length;
+  }
 
   return (
     <html lang='en'>
@@ -38,6 +52,10 @@ export default async function RootLayout({
         <body
           className={`${josefinSans.variable} ${openSans.variable} mx-auto flex h-fit min-h-screen w-screen flex-col overflow-x-hidden font-sans antialiased`}
         >
+          <StoreInitializer
+            cartItemsCount={cartItemsCount}
+            newProducts={newProducts}
+          />
           <div className='h-14 w-full md:h-20 lg:h-24' />
           <Header token={token} categories={categories} />
           <main className='flex flex-1 flex-col px-6 py-4 md:px-8 md:py-8 lg:px-10 lg:py-10 lg:pr-12'>
