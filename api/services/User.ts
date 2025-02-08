@@ -7,6 +7,8 @@ import {
   UserInfoResponse,
   UpdateUserInfoPayload,
   UpdateUserInfoResponse,
+  UpdatePasswordPayload,
+  UpdatePasswordResponse,
 } from '../types/user';
 
 export const UserService = {
@@ -30,6 +32,13 @@ export const UserService = {
 
   updateUserInfo: async (payload: UpdateUserInfoPayload) => {
     return fetchWrapper<UpdateUserInfoResponse>('/users', {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  updatePassword: async (payload: UpdatePasswordPayload) => {
+    return fetchWrapper<UpdatePasswordResponse>('/users/password', {
       method: 'PUT',
       body: JSON.stringify(payload),
     });

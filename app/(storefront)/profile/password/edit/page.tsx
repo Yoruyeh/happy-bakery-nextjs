@@ -4,30 +4,35 @@ import { passwordEditAction } from '@/action/action';
 import Button from '@/components/button/Button';
 import StyledInput from '@/components/input/StyledInput';
 import Form from 'next/form';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface PasswordEditFormValues {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  currentPW: string;
+  newPW: string;
+  confirmPW: string;
 }
 
 interface PasswordEditFormErrors {
-  oldPassword?: string;
-  newPassword?: string;
-  confirmPassword?: string;
+  currentPW?: string;
+  newPW?: string;
+  confirmPW?: string;
 }
 
 function PasswordEditPage() {
+  const router = useRouter();
   const [formValues, setFormValues] = useState<PasswordEditFormValues>({
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    currentPW: '',
+    newPW: '',
+    confirmPW: '',
   });
 
   const [errors, setErrors] = useState<PasswordEditFormErrors>({});
 
-  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  function inputChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
   }
@@ -36,20 +41,24 @@ function PasswordEditPage() {
     const newErrors: PasswordEditFormErrors = {};
     // 從 FormData 中取得值
 
-    const oldPassword = formData.get('oldPassword') as string;
-    const newPassword = formData.get('newPassword') as string;
-    const confirmPassword = formData.get('confirmPassword') as string;
+    const currentPW = formData.get('currentPW') as string;
+    const newPW = formData.get('newPW') as string;
+    const confirmPW = formData.get('confirmPW') as string;
 
-    if (!oldPassword.trim()) {
-      newErrors.oldPassword = 'Old Password is required';
+    if (!currentPW.trim()) {
+      newErrors.currentPW = 'Current Password is required';
     }
 
-    if (!newPassword.trim()) {
-      newErrors.newPassword = 'New Password is required';
+    if (!newPW.trim()) {
+      newErrors.newPW = 'New Password is required';
     }
 
-    if (!confirmPassword.trim()) {
-      newErrors.confirmPassword = 'Confirm Password is required';
+    if (!confirmPW.trim()) {
+      newErrors.confirmPW = 'Confirm Password is required';
+    }
+
+    if (confirmPW.trim() && newPW.trim() !== confirmPW.trim()) {
+      newErrors.confirmPW = 'New Password and Confirm Password do not match';
     }
 
     setErrors(newErrors);
@@ -61,11 +70,26 @@ function PasswordEditPage() {
   async function onSubmit(formData: globalThis.FormData) {
     if (!validateForm(formData)) return;
     setFormValues({
-      oldPassword: '',
-      newPassword: '',
-      confirmPassword: '',
+      currentPW: '',
+      newPW: '',
+      confirmPW: '',
     });
-    await passwordEditAction(formData);
+    const result = await passwordEditAction(formData);
+    if (result.success) {
+      toast.success(result.message, {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+
+      setTimeout(() => {
+        router.push('/profile/setting');
+      }, 1200);
+    } else {
+      toast.error('Wrong Password! Update Password failed', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    }
   }
 
   return (
@@ -75,51 +99,51 @@ function PasswordEditPage() {
       </h1>
       <Form action={onSubmit} className='flex flex-col gap-4'>
         <div className='flex flex-col gap-2'>
-          <label htmlFor='oldPassword' className='text-lg font-medium'>
+          <label htmlFor='currentPW' className='text-lg font-medium'>
             <span className='text-sm text-red-500'>* </span>
-            Old Password
+            Current Password
           </label>
           <StyledInput
             type='password'
-            id='oldPassword'
-            name='oldPassword'
-            placeholder='Old Password'
-            defaultValue={formValues.oldPassword}
-            value={formValues.oldPassword}
+            id='currentPW'
+            name='currentPW'
+            placeholder='Current Password'
+            defaultValue={formValues.currentPW}
+            value={formValues.currentPW}
             onChange={inputChangeHandler}
-            error={errors.oldPassword}
+            error={errors.currentPW}
           />
         </div>
         <div className='flex flex-col gap-2'>
-          <label htmlFor='newPassword' className='text-lg font-medium'>
+          <label htmlFor='newPW' className='text-lg font-medium'>
             <span className='text-sm text-red-500'>* </span>
             New Password
           </label>
           <StyledInput
             type='password'
-            id='newPassword'
-            name='newPassword'
+            id='newPW'
+            name='newPW'
             placeholder='New Password'
-            defaultValue={formValues.newPassword}
-            value={formValues.newPassword}
+            defaultValue={formValues.newPW}
+            value={formValues.newPW}
             onChange={inputChangeHandler}
-            error={errors.newPassword}
+            error={errors.newPW}
           />
         </div>
         <div className='flex flex-col gap-2'>
-          <label htmlFor='confirmPassword' className='text-lg font-medium'>
+          <label htmlFor='confirmPW' className='text-lg font-medium'>
             <span className='text-sm text-red-500'>* </span>
             Confirm New Password
           </label>
           <StyledInput
             type='password'
-            id='confirmPassword'
-            name='confirmPassword'
+            id='confirmPW'
+            name='confirmPW'
             placeholder='Confirm New Password'
-            defaultValue={formValues.confirmPassword}
-            value={formValues.confirmPassword}
+            defaultValue={formValues.confirmPW}
+            value={formValues.confirmPW}
             onChange={inputChangeHandler}
-            error={errors.confirmPassword}
+            error={errors.confirmPW}
           />
         </div>
         <Button
@@ -127,6 +151,7 @@ function PasswordEditPage() {
           customClass='bg-bgColor-primaryBtn mt-5 hover:bg-bgColor-primaryHover text-lg hover:text-text-white font-medium w-full'
         />
       </Form>
+      <ToastContainer theme='colored' />
     </div>
   );
 }

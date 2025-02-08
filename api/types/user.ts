@@ -68,3 +68,14 @@ export interface UpdateUserInfoResponse {
   message: string;
   user: UserInfo;
 }
+
+export interface UpdatePasswordPayload {
+  currentPW: string;
+  newPW: string;
+  confirmPW: string;
+}
+
+export interface UpdatePasswordResponse {
+  status: 'success' | 'error';
+  message: string;
+}

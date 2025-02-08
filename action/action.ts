@@ -151,11 +151,29 @@ export async function settingAction(formData: globalThis.FormData) {
 }
 
 export async function passwordEditAction(formData: globalThis.FormData) {
-  const oldPassword = formData.get('oldPassword') as string;
-  const newPassword = formData.get('newPassword') as string;
-  const confirmPassword = formData.get('confirmPassword') as string;
+  const currentPW = formData.get('currentPW') as string;
+  const newPW = formData.get('newPW') as string;
+  const confirmPW = formData.get('confirmPW') as string;
 
-  console.log({ oldPassword, newPassword, confirmPassword });
+  try {
+    const response = await UserService.updatePassword({
+      currentPW,
+      newPW,
+      confirmPW,
+    });
+
+    if (response.status === 'success') {
+      return { success: true, message: response.message };
+    } else {
+      return { success: false, message: response.message };
+    }
+  } catch (error) {
+    console.error('Update Password failed:', error);
+    return {
+      success: false,
+      message: 'An unexpected error occurred during update password.',
+    };
+  }
 }
 
 export async function contactAction(formData: globalThis.FormData) {
