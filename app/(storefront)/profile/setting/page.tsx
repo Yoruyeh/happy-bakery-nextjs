@@ -1,12 +1,15 @@
 'use client';
 
 import { settingAction } from '@/action/action';
+import { UserService } from '@/api/services/User';
 import Button from '@/components/button/Button';
 import StyledInput from '@/components/input/StyledInput';
+import PageLoader from '@/components/spinner/PageLoader';
 import { validateEmail } from '@/utils/validate';
+import { useQuery } from '@tanstack/react-query';
 import Form from 'next/form';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ProfileSettingFormValues {
@@ -29,7 +32,18 @@ interface ProfileSettingFormErrors {
   gender?: string;
 }
 
-const SettingPage = () => {
+function SettingPage() {
+  const {
+    data: userInfo,
+    isPending,
+    isLoading,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: async () => {
+      return await UserService.getUserInfo();
+    },
+  });
+
   const [formValues, setFormValues] = useState<ProfileSettingFormValues>({
     firstName: '',
     lastName: '',
@@ -40,9 +54,25 @@ const SettingPage = () => {
     gender: '',
   });
 
+  useEffect(() => {
+    if (userInfo?.user) {
+      setFormValues({
+        firstName: userInfo.user.firstName ?? '',
+        lastName: userInfo.user.lastName ?? '',
+        birthday: userInfo.user.birthday ?? '',
+        email: userInfo.user.email ?? '',
+        phone: userInfo.user.phone ?? '',
+        address: userInfo.user.address ?? '',
+        gender: userInfo.user.gender ?? '',
+      });
+    }
+  }, [userInfo]);
+
   const [errors, setErrors] = useState<ProfileSettingFormErrors>({});
 
-  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  function inputChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
   }
@@ -102,6 +132,8 @@ const SettingPage = () => {
     await settingAction(formData);
   }
 
+  if (isPending || isLoading || !userInfo?.user) return <PageLoader />;
+
   return (
     <div className=''>
       <h1 className='mb-4 text-2xl font-bold text-text-darkGray'>
@@ -119,7 +151,6 @@ const SettingPage = () => {
               id='firstName'
               name='firstName'
               placeholder='First Name'
-              defaultValue={formValues.firstName}
               value={formValues.firstName}
               onChange={inputChangeHandler}
               error={errors.firstName}
@@ -135,7 +166,6 @@ const SettingPage = () => {
               id='lastName'
               name='lastName'
               placeholder='Last Name'
-              defaultValue={formValues.lastName}
               value={formValues.lastName}
               onChange={inputChangeHandler}
               error={errors.lastName}
@@ -151,7 +181,6 @@ const SettingPage = () => {
               id='birthday'
               name='birthday'
               placeholder='Birthday'
-              defaultValue={formValues.birthday}
               value={formValues.birthday}
               onChange={inputChangeHandler}
               error={errors.birthday}
@@ -167,7 +196,6 @@ const SettingPage = () => {
               id='email'
               name='email'
               placeholder='Email'
-              defaultValue={formValues.email}
               value={formValues.email}
               onChange={inputChangeHandler}
               error={errors.email}
@@ -182,7 +210,6 @@ const SettingPage = () => {
               id='address'
               name='address'
               placeholder='Address'
-              defaultValue={formValues.address}
               value={formValues.address}
               onChange={inputChangeHandler}
               error={errors.address}
@@ -198,7 +225,6 @@ const SettingPage = () => {
               id='phone'
               name='phone'
               placeholder='Phone'
-              defaultValue={formValues.phone}
               value={formValues.phone}
               onChange={inputChangeHandler}
               error={errors.phone}
@@ -281,6 +307,6 @@ const SettingPage = () => {
       </Form>
     </div>
   );
-};
+}
 
 export default SettingPage;

@@ -37,3 +37,18 @@ export interface RegisterResponse {
   token?: string;
   user?: RegisterUser;
 }
+
+export interface UserInfo {
+  id: number;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  email: string;
+  address: string;
+  phone: string;
+  birthday: string;
+}
+
+export interface UserInfoResponse {
+  user: UserInfo;
+}

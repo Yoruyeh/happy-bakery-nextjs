@@ -1,7 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { UserAuthService } from '../api/services/UserAuth';
+import { UserService } from '../api/services/User';
 import { redirect } from 'next/navigation';
 import { CreateOrderItem } from '@/api/types/order';
 import { OrderService } from '@/api/services/Order';
@@ -12,7 +12,7 @@ export async function loginAction(formData: globalThis.FormData) {
   const password = formData.get('password') as string;
 
   try {
-    const response = await UserAuthService.login({ email, password });
+    const response = await UserService.login({ email, password });
     const cookieStore = await cookies();
 
     if (response.status === 'success' && response.token) {
@@ -38,7 +38,7 @@ export async function registerAction(formData: globalThis.FormData) {
   const termsAgreement = formData.has('termsAgreement');
 
   try {
-    const response = await UserAuthService.register({
+    const response = await UserService.register({
       firstName,
       lastName,
       email,

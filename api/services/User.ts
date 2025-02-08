@@ -4,9 +4,10 @@ import {
   LoginResponse,
   RegisterPayload,
   RegisterResponse,
-} from '../types/common';
+  UserInfoResponse,
+} from '../types/user';
 
-export const UserAuthService = {
+export const UserService = {
   login: async (credentials: LoginPayload) => {
     return fetchWrapper<LoginResponse>('/users/signin', {
       method: 'POST',
@@ -19,5 +20,9 @@ export const UserAuthService = {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
+  },
+
+  getUserInfo: async () => {
+    return fetchWrapper<UserInfoResponse>('/users');
   },
 };
