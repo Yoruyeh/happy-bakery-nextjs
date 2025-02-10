@@ -20,8 +20,28 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Happy Bakery',
-  description: "Let's bake happy!",
+  title: {
+    template: ' %s | Happy Bakery',
+    default: 'Happy Bakery',
+  },
+  description:
+    'Happy Bakery opened its doors in 2024, bringing a revolutionary approach to modern baking. Our vision was born from a simple yet powerful belief: desserts can be both delicious and nutritious.',
+  generator: 'Next.js',
+  applicationName: 'Next.js',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['Next.js', 'React', 'JavaScript'],
+  authors: [
+    { name: 'Yoru Yeh' },
+    { name: 'Jasmine Huang' },
+    { name: 'Yoru Yeh', url: 'https://github.com/Yoruyeh' },
+    { name: 'Jasmine Huang', url: 'https://github.com/Jasmineeds' },
+  ],
+  creator: 'Yoru Yeh',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 };
 
 export default async function RootLayout({

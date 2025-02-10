@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import ContactBanner from '@/public/images/banner-contact.jpg';
 import ContactForm from '@/components/form/ContactForm';
+import type { Metadata } from 'next';
 
-type ContactPageProps = {};
+export const metadata: Metadata = {
+  title: 'Contact Us',
+};
 
-const ContactPage = ({}: ContactPageProps) => {
+const ContactPage = () => {
   return (
     <div className='h-fit w-full'>
       <div className='absolute -left-6 top-14 h-[250px] w-[calc(100vw+32px)] md:top-20 md:h-[360px] lg:top-24 lg:h-[480px]'>

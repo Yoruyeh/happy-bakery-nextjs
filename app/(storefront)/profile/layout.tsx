@@ -1,5 +1,10 @@
 import LogoutButton from '@/components/button/LogoutButton';
 import ProfileTab from '@/components/tab/ProfileTab';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Profile',
+};
 
 interface ProfileLayoutProps {
   children: React.ReactNode;

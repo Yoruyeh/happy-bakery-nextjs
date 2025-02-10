@@ -2,6 +2,11 @@ import Image from 'next/image';
 import AboutBanner from '@/public/images/banner-about.jpg';
 import AboutImage1 from '@/public/images/about.jpg';
 import AboutImage2 from '@/public/images/about2.jpg';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Our Story',
+};
 
 const AboutPage = () => {
   return (

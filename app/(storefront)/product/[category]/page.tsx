@@ -1,6 +1,39 @@
 import { ProductService } from '@/api/services/Product';
 import Link from 'next/link';
 import ProductList from '@/components/list/ProductList';
+import type { Metadata, ResolvingMetadata } from 'next';
+
+type MetaDataProps = {
+  params: Promise<{ category: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: MetaDataProps): Promise<Metadata> {
+  // read route params
+  const category = (await params).category;
+
+  switch (category) {
+    case 'all':
+      return {
+        title: 'All Products',
+      };
+    case 'new':
+      return {
+        title: 'New Products',
+      };
+    case 'search':
+      return {
+        title: 'Search Results',
+      };
+    default:
+      const capitalizedCategory =
+        category.charAt(0).toUpperCase() + category.slice(1);
+      return {
+        title: capitalizedCategory,
+      };
+  }
+}
 
 type Params = Promise<{ category: string }>;
 type SearchParams = Promise<{ [key: string]: string | undefined }>;

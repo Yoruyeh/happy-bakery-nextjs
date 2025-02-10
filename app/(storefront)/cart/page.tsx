@@ -3,6 +3,11 @@ import CartBanner from '@/public/images/banner-cart.jpg';
 import Slides from '@/components/swiper/ProductSlides';
 import { CartService } from '@/api/services/Cart';
 import CartList from '@/components/list/CartList';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Your Cart',
+};
 
 async function CartPage() {
   const response = await CartService.getCart();

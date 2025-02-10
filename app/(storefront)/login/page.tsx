@@ -1,5 +1,10 @@
 import Link from 'next/link';
 import LoginForm from '@/components/form/LoginForm';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Login',
+};
 
 const LoginPage = () => {
   return (

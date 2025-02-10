@@ -4,6 +4,25 @@ import ImageSwiper from '@/components/swiper/ImageSwiper';
 import ProductSlides from '@/components/swiper/ProductSlides';
 import NewReleaseTag from '@/components/tag/NewReleaseTag';
 import { cookies } from 'next/headers';
+import type { Metadata, ResolvingMetadata } from 'next';
+
+type MataDataProps = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: MataDataProps): Promise<Metadata> {
+  // read route params
+  const id = (await params).id;
+
+  // fetch data
+  const { product } = await ProductService.getProductDetail(Number(id));
+
+  return {
+    title: product.name,
+  };
+}
 
 type Params = Promise<{ id: string }>;
 
