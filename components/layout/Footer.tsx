@@ -145,34 +145,42 @@ function Footer({ categories }: FooterProps) {
         </li>
       </ul>
       <div className='mb-10 mt-20 flex items-center justify-center gap-8'>
-        <Image
-          src={FacebookIcon}
-          alt='facebook'
-          width={24}
-          height={24}
-          className='transform-translate cursor-pointer duration-300 ease-in-out hover:scale-110'
-        />
-        <Image
-          src={InstagramIcon}
-          alt='instagram'
-          width={24}
-          height={24}
-          className='transform-translate cursor-pointer duration-300 ease-in-out hover:scale-110'
-        />
-        <Image
-          src={XIcon}
-          alt='x'
-          width={24}
-          height={24}
-          className='transform-translate cursor-pointer duration-300 ease-in-out hover:scale-110'
-        />
-        <Image
-          src={TikTokIcon}
-          alt='tiktok'
-          width={24}
-          height={24}
-          className='transform-translate cursor-pointer duration-300 ease-in-out hover:scale-110'
-        />
+        <div className='relative h-6 w-6 cursor-pointer'>
+          <Image
+            src={FacebookIcon}
+            alt='facebook'
+            fill={true}
+            sizes='24px'
+            className='transform-translate duration-300 ease-in-out hover:scale-110'
+          />
+        </div>
+        <div className='relative h-6 w-6 cursor-pointer'>
+          <Image
+            src={InstagramIcon}
+            alt='instagram'
+            fill={true}
+            sizes='24px'
+            className='transform-translate duration-300 ease-in-out hover:scale-110'
+          />
+        </div>
+        <div className='relative h-6 w-6 cursor-pointer'>
+          <Image
+            src={XIcon}
+            alt='x'
+            fill={true}
+            sizes='24px'
+            className='transform-translate duration-300 ease-in-out hover:scale-110'
+          />
+        </div>
+        <div className='relative h-6 w-6 cursor-pointer'>
+          <Image
+            src={TikTokIcon}
+            alt='tiktok'
+            fill={true}
+            sizes='24px'
+            className='transform-translate duration-300 ease-in-out hover:scale-110'
+          />
+        </div>
       </div>
       <div>
         <p className='text-center text-sm'>

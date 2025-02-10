@@ -25,6 +25,7 @@ function ProductCard({ product, category }: ProductCardProps) {
               src={product.cover}
               alt={product.name}
               fill={true}
+              sizes='300px'
               className='object-cover'
             />
           </div>

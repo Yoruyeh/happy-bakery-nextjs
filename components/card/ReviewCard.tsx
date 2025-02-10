@@ -40,6 +40,7 @@ function ReviewCard({ review }: ReviewCardProps) {
               src={review.avatar}
               alt='reviewer-avatar'
               fill={true}
+              sizes='64px'
               className='object-cover'
             />
           </div>
@@ -50,6 +51,7 @@ function ReviewCard({ review }: ReviewCardProps) {
           src={review.imageUrl}
           alt=''
           fill={true}
+          sizes='300px'
           className='object-cover'
         />
       </div>

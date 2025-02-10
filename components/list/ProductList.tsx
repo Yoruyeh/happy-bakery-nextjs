@@ -62,6 +62,7 @@ function ProductList({
           src={CategoryBanner}
           alt='category-banner'
           fill={true}
+          sizes='100vw'
           className='object-cover'
         />
         <div className='absolute inset-0 flex flex-col items-center justify-center gap-1 text-title-seconday'>

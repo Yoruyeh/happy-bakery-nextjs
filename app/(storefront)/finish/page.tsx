@@ -11,6 +11,7 @@ const FinishPage = () => {
           src={FinishImage}
           alt='finish-image'
           fill={true}
+          sizes='100vw'
           className='object-cover opacity-75 contrast-75'
         />
       </div>

@@ -14,6 +14,7 @@ async function CartPage() {
           src={CartBanner}
           fill={true}
           alt='cart-banner'
+          sizes='100vw'
           className='object-cover opacity-75 contrast-75'
         />
       </div>

@@ -10,6 +10,7 @@ const AboutPage = () => {
         <Image
           src={AboutBanner}
           fill={true}
+          sizes='100vw'
           alt='about-banner'
           className='object-cover'
         />
@@ -30,6 +31,7 @@ const AboutPage = () => {
               <Image
                 src={AboutImage1}
                 fill={true}
+                sizes='100vw'
                 alt='about-image-1'
                 className='object-cover'
               />
@@ -68,6 +70,7 @@ const AboutPage = () => {
             <Image
               src={AboutImage2}
               fill={true}
+              sizes='100vw'
               alt='about-image-2'
               className='object-cover'
             />

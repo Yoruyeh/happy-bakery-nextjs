@@ -6,7 +6,7 @@ interface CheckoutItemProps {
 }
 
 function CheckoutItem({ checkoutItem }: CheckoutItemProps) {
-  const totalPrice = checkoutItem.quantity * checkoutItem.price_each;
+  const totalPrice = checkoutItem.quantity * Number(checkoutItem.price_each);
 
   return (
     <div className='grid grid-cols-[1fr_auto] gap-4 py-4'>
@@ -18,6 +18,7 @@ function CheckoutItem({ checkoutItem }: CheckoutItemProps) {
             src={checkoutItem.Product.cover}
             alt={checkoutItem.Product.name}
             fill={true}
+            sizes='300px'
             className='rounded-lg object-cover'
           />
           <span className='test-white absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-stone-600 text-xs font-semibold text-white'>

@@ -12,6 +12,7 @@ const ContactPage = ({}: ContactPageProps) => {
           src={ContactBanner}
           alt='contact-banner'
           fill={true}
+          sizes='100vw'
           className='object-cover'
         />
       </div>

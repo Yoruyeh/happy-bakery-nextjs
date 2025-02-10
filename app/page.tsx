@@ -13,6 +13,7 @@ export default function Home() {
           src={HomeBanner}
           fill={true}
           alt='home-banner'
+          sizes='100vw'
           className='object-cover opacity-75 contrast-75'
         />
       </div>

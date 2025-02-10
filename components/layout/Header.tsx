@@ -138,17 +138,21 @@ function Header({ token, categories }: HeaderProps) {
         />
         {/* Logo */}
         <div
-          className='h-6 w-6 flex-none cursor-pointer md:h-12 md:w-fit lg:h-16'
+          className='relative h-6 w-6 flex-none cursor-pointer md:h-12 md:w-[120px] lg:h-16 lg:w-[150px]'
           onClick={() => navigateHandler('/')}
         >
           <Image
             src={smallLogo}
             alt='logo'
+            fill={true}
+            sizes='24px'
             className='h-full w-full md:hidden'
           />
           <Image
             src={bigLogo}
             alt='logo'
+            fill={true}
+            sizes='150px'
             className='hidden h-full w-full md:block'
           />
         </div>

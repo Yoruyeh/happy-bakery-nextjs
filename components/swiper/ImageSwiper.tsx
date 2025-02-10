@@ -29,6 +29,7 @@ function ImageSwiper({ images }: ImageSwiperProps) {
             src={image.image_path}
             alt={image.name}
             fill={true}
+            sizes='300px'
             className='object-cover'
           />
         </SwiperSlide>
