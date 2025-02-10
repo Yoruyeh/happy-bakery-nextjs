@@ -6,14 +6,6 @@ import Link from 'next/link';
 
 type Params = Promise<{ id: string }>;
 
-interface CheckoutItemType {
-  id: number;
-  name: string;
-  priceRegular: number;
-  cover: string;
-  quantity: number;
-}
-
 async function OrderDetailPage(props: { params: Params }) {
   const params = await props.params;
   const id = Number(params.id);
