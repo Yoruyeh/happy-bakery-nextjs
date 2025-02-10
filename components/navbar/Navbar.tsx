@@ -33,11 +33,11 @@ function Navbar({
   return (
     <nav
       className={twMerge(
-        'menu transform-translate fixed left-0 top-[56px] z-50 h-[calc(100vh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out',
+        'transform-translate fixed left-0 top-[56px] z-50 h-[calc(100dvh-56px)] w-1/2 bg-white font-josefin text-lg font-semibold duration-300 ease-in-out',
         // Mobile styles
         isMenuOpen ? 'translate-x-0' : '-translate-x-full',
         // Ipad styles
-        'md:top-[80px] md:h-[calc(100vh-80px)]',
+        'md:top-[80px] md:h-[calc(100dvh-80px)]',
         // Desktop styles
         'lg:static lg:h-fit lg:w-full lg:flex-1 lg:translate-x-0'
       )}
