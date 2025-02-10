@@ -12,7 +12,7 @@ interface CartItemProps {
 function CartItem({ cartItem }: CartItemProps) {
   const queryClient = useQueryClient();
   const productId = cartItem.Product.id;
-  const totalPrice = cartItem.quantity * cartItem.price_each;
+  const totalPrice = cartItem.quantity * Number(cartItem.price_each);
 
   const { mutate: updateCartItem, isPending } = useMutation({
     mutationFn: async (quantity: number) => {
@@ -42,6 +42,7 @@ function CartItem({ cartItem }: CartItemProps) {
             src={cartItem.Product.cover}
             alt={cartItem.Product.name}
             fill={true}
+            sizes='(max-width: 768px) 96px, 128px'
             className='object-cover'
           />
         </div>

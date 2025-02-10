@@ -18,7 +18,7 @@ function CheckoutItem({ checkoutItem }: CheckoutItemProps) {
             src={checkoutItem.Product.cover}
             alt={checkoutItem.Product.name}
             fill={true}
-            sizes='300px'
+            sizes='72px'
             className='rounded-lg object-cover'
           />
           <span className='test-white absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-stone-600 text-xs font-semibold text-white'>
