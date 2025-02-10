@@ -13,58 +13,48 @@ const dummyReviews = [
   {
     id: 1,
     avatar: '/images/avatar1.jpg',
-    title: 'Absolutely divine!',
+    title: 'Sweet Berry Paradise!',
     content:
-      'This cake offers a luscious, melt-in-your-mouth experience with every bite. The depth of flavor and velvety texture is unmatched.',
-    imageUrl: '/images/cake1.jpg',
+      'Fresh strawberries perfectly balanced with light cream frosting. A true summer delight!',
+    imageUrl: '/images/review-sample1.jpg',
   },
   {
     id: 2,
     avatar: '/images/avatar2.jpg',
-    title: 'Exquisite and flaky perfection!',
+    title: 'Berry Choco Dream',
     content:
-      'This croissant boasts a golden exterior that gives way to layers of buttery bliss. A true testament to artisan baking!',
-    imageUrl: '/images/cake1.jpg',
+      'Rich chocolate meets tangy blueberries creating an unforgettable flavor explosion.',
+    imageUrl: '/images/review-sample2.jpg',
   },
   {
     id: 3,
     avatar: '/images/avatar3.jpg',
-    title: 'An absolute delight!',
+    title: 'Sugar Cloud Delight',
     content:
-      'This blueberry scone is bursting with juicy berries, enveloped in a tender, buttery crumb. Perfectly balanced sweetness makes it a morning must-have!',
-    imageUrl: '/images/cake1.jpg',
+      'Soft, pillowy dough crowned with melt-in-your-mouth vanilla frosting.',
+    imageUrl: '/images/review-sample3.jpg',
   },
   {
     id: 4,
-    avatar: '/images/avatar3.jpg',
-    title: 'An absolute delight!',
-    content:
-      'This blueberry scone is bursting with juicy berries, enveloped in a tender, buttery crumb. Perfectly balanced sweetness makes it a morning must-have!',
-    imageUrl: '/images/cake1.jpg',
+    avatar: '/images/avatar4.jpg',
+    title: 'Cocoa Comfort',
+    content: 'Crispy edges, chewy center, packed with premium chocolate chips.',
+    imageUrl: '/images/review-sample4.jpg',
   },
   {
     id: 5,
-    avatar: '/images/avatar3.jpg',
-    title: 'An absolute delight!',
-    content:
-      'This blueberry scone is bursting with juicy berries, enveloped in a tender, buttery crumb. Perfectly balanced sweetness makes it a morning must-have!',
-    imageUrl: '/images/cake1.jpg',
+    avatar: '/images/avatar5.jpg',
+    title: 'Golden Flaky Joy',
+    content: 'Buttery layers fold into perfect, crispy crescents of happiness.',
+    imageUrl: '/images/review-sample5.jpg',
   },
   {
     id: 6,
-    avatar: '/images/avatar3.jpg',
-    title: 'An absolute delight!',
+    avatar: '/images/avatar6.jpg',
+    title: 'Celebration Magic',
     content:
-      'This blueberry scone is bursting with juicy berries, enveloped in a tender, buttery crumb. Perfectly balanced sweetness makes it a morning must-have!',
-    imageUrl: '/images/cake1.jpg',
-  },
-  {
-    id: 7,
-    avatar: '/images/avatar3.jpg',
-    title: 'An absolute delight!',
-    content:
-      'This blueberry scone is bursting with juicy berries, enveloped in a tender, buttery crumb. Perfectly balanced sweetness makes it a morning must-have!',
-    imageUrl: '/images/cake1.jpg',
+      'Moist vanilla layers with rainbow sprinkles make every day special.',
+    imageUrl: '/images/review-sample6.jpg',
   },
 ];
 
