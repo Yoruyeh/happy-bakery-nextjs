@@ -145,7 +145,7 @@ export async function settingAction(formData: globalThis.FormData) {
       address,
       phone,
       gender,
-      birthday,
+      birthday: birthday === '' ? null : birthday,
     });
 
     if (response.status === 'success') {

@@ -60,7 +60,7 @@ export interface UpdateUserInfoPayload {
   email: string;
   address?: string;
   phone?: string;
-  birthday?: string;
+  birthday?: string | null;
 }
 
 export interface UpdateUserInfoResponse {

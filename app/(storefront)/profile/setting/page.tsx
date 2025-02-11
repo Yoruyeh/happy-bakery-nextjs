@@ -3,6 +3,7 @@
 import { settingAction } from '@/action/action';
 import { UserService } from '@/api/services/User';
 import Button from '@/components/button/Button';
+import StyledDatePicker from '@/components/input/StyledDatePicker';
 import StyledInput from '@/components/input/StyledInput';
 import PageLoader from '@/components/spinner/PageLoader';
 import { validateEmail } from '@/utils/validate';
@@ -91,7 +92,7 @@ function SettingPage() {
       newErrors.email = emailError;
     }
 
-    if (phone.trim().length > 10 || phone.trim().length < 8) {
+    if (phone.trim() && (phone.trim().length > 10 || phone.trim().length < 8)) {
       newErrors.phone = 'Phone number is invalid';
     }
 
@@ -160,11 +161,9 @@ function SettingPage() {
             <label htmlFor='birthday' className='text-lg font-medium'>
               Birthday
             </label>
-            <StyledInput
-              type='date'
+            <StyledDatePicker
               id='birthday'
               name='birthday'
-              placeholder='Birthday'
               value={formValues.birthday}
               onChange={inputChangeHandler}
               error={errors.birthday}
@@ -264,6 +263,13 @@ function SettingPage() {
                 <label htmlFor='other' className='text-lg font-medium'>
                   Other
                 </label>
+                <input
+                  type='text'
+                  hidden
+                  name='gender'
+                  value={formValues.gender}
+                  readOnly
+                />
               </div>
             </div>
             {errors.gender && (
