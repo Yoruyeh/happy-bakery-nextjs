@@ -6,10 +6,11 @@ import InstagramIcon from '@/public/icons/instagram.svg';
 import XIcon from '@/public/icons/x.svg';
 import TikTokIcon from '@/public/icons/tiktok.svg';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 import { Category } from '@/api/types/product';
+import { usePathname } from 'next/navigation';
 
 interface FooterProps {
   categories: Category[];
@@ -20,18 +21,25 @@ interface FooterNavState {
 }
 
 function Footer({ categories }: FooterProps) {
+  const pathname = usePathname();
   const [isFooterNavOpen, setIsFooterNavOpen] = useState<FooterNavState>({
     aboutUs: false,
     category: false,
     company: false,
   });
 
-  const toggleFooterNav = (navName: string) => {
+  function toggleFooterNav(navName: string) {
     setIsFooterNavOpen((prev) => ({
       ...prev,
       [navName]: !prev[navName],
     }));
-  };
+  }
+
+  useEffect(() => {
+    if (isFooterNavOpen.aboutUs) toggleFooterNav('aboutUs');
+    if (isFooterNavOpen.category) toggleFooterNav('category');
+    if (isFooterNavOpen.company) toggleFooterNav('company');
+  }, [pathname]);
 
   return (
     <footer className='h-fit w-full items-center justify-between border-t border-stone-400 bg-bgColor-footer px-6 py-4 text-text-brown md:px-8 md:py-8 lg:px-10 lg:py-10 lg:pr-12'>
