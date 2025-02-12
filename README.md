@@ -60,26 +60,24 @@ npx sequelize db:seed:all
 
 4. Create .env File in both api and client
 
-<!-- api -->
-
-```
+```bash
+# api
 IMGUR_CLIENT_ID= your password
 JWT_SECRET= your password
 ```
 
-<!-- client -->
-
-```
+```bash
+# client
 NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
 
 5. Start both api and client server in Terminal
 
 ```bash
-# api server
+# api
 npm run start
 
-# client server
+# client
 npm run build
 npm run start
 ```
