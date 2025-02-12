@@ -7,6 +7,7 @@ import Form from 'next/form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { validatePassword } from '@/utils/validate';
 
 interface PasswordEditFormValues {
   currentPW: string;
@@ -45,16 +46,20 @@ function PasswordEditPage() {
     const newPW = formData.get('newPW') as string;
     const confirmPW = formData.get('confirmPW') as string;
 
-    if (!currentPW.trim()) {
-      newErrors.currentPW = 'Current Password is required';
+    const currentPWError = validatePassword(currentPW);
+    const newPWError = validatePassword(newPW);
+    const confirmPWError = validatePassword(confirmPW);
+
+    if (currentPWError) {
+      newErrors.currentPW = `Current ${currentPWError}`;
     }
 
-    if (!newPW.trim()) {
-      newErrors.newPW = 'New Password is required';
+    if (newPWError) {
+      newErrors.newPW = `New ${newPWError}`;
     }
 
-    if (!confirmPW.trim()) {
-      newErrors.confirmPW = 'Confirm Password is required';
+    if (confirmPWError) {
+      newErrors.confirmPW = `Confirm ${confirmPWError}`;
     }
 
     if (confirmPW.trim() && newPW.trim() !== confirmPW.trim()) {
