@@ -3,6 +3,7 @@ import Button from '@/components/button/Button';
 import CheckoutItem from '@/components/card/CheckoutItem';
 import OrderSummaryCollapse from '@/components/collapse/OrderSummaryCollapse';
 import Link from 'next/link';
+import ErrorPage from './error';
 
 type Params = Promise<{ id: string }>;
 
@@ -10,13 +11,19 @@ async function OrderDetailPage(props: { params: Params }) {
   const params = await props.params;
   const id = Number(params.id);
 
-  const { order } = await OrderService.getOrderDetail(id);
-  const orderItemsCount = order.OrderItems.length;
-  const subtotalPrice = order.OrderItems.reduce((prevTotal, item) => {
+  const { userOrders } = await OrderService.getOrders();
+  const { status, order } = await OrderService.getOrderDetail(id);
+
+  const isValidOrder = userOrders.some((order) => order.id === id);
+
+  if (status === 'error' || !isValidOrder || !order) return <ErrorPage />;
+
+  const orderItemsCount = order?.OrderItems?.length;
+  const subtotalPrice = order?.OrderItems?.reduce((prevTotal, item) => {
     return prevTotal + Number(item.price_each) * item.quantity;
   }, 0);
-  const shippinFee = order.shipping_fee;
-  const totalPrice = order.total_price;
+  const shippinFee = order?.shipping_fee;
+  const totalPrice = order?.total_price;
 
   return (
     <div className='mx-auto max-w-screen-lg'>
