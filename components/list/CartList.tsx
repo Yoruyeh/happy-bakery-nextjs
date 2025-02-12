@@ -35,7 +35,7 @@ function CartList({ initialCartData }: CartListProps) {
     );
 
   const totalPrice = data.cartItems.reduce((prevTotal, item) => {
-    return prevTotal + item.price_each * item.quantity;
+    return prevTotal + Number(item.price_each) * item.quantity;
   }, 0);
 
   return (

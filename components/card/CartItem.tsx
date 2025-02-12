@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import QuantityInputInCart from '../input/QuantityInputInCart';
 import { CartItemType } from '@/api/types/cart';

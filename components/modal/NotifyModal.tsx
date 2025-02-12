@@ -1,3 +1,5 @@
+'use client';
+
 interface ContentType {
   title: string;
   text: string;
