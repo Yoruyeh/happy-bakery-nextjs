@@ -3,7 +3,7 @@
 import Form from 'next/form';
 import StyledInput from '../input/StyledInput';
 import { useState } from 'react';
-import { validateEmail } from '@/utils/validate';
+import { validateEmail, validatePhoneNumber } from '@/utils/validate';
 import { checkoutAction } from '@/action/action';
 import Button from '../button/Button';
 import PaymentOptionCollapse from '@/components/collapse/PaymentOptionCollapse';
@@ -174,9 +174,14 @@ function CheckoutForm({
 
     // 驗證資料
     const emailError = validateEmail(email);
+    const phoneError = validatePhoneNumber(phone);
 
     if (emailError) {
       newErrors.email = emailError;
+    }
+
+    if (phoneError) {
+      newErrors.phone = phoneError;
     }
 
     if (!firstName.trim()) {
@@ -189,10 +194,6 @@ function CheckoutForm({
 
     if (!address.trim()) {
       newErrors.address = 'Address is required';
-    }
-
-    if (!phone.trim()) {
-      newErrors.phone = 'Phone is required';
     }
 
     if (!shippingMethod) {

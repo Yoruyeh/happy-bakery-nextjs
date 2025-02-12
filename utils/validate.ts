@@ -17,3 +17,14 @@ export function validatePassword(password: string): string | null {
 
   return null;
 }
+
+export function validatePhoneNumber(phoneNumber: string): string | null {
+  const phoneRegex = /^\d{8,10}$/;
+  if (!phoneNumber.trim()) {
+    return 'Phone number is required';
+  } else if (!phoneRegex.test(phoneNumber)) {
+    return 'Invalid phone number, please enter 8 - 10 digits';
+  }
+
+  return null;
+}

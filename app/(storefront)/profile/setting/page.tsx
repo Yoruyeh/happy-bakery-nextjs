@@ -6,7 +6,7 @@ import Button from '@/components/button/Button';
 import StyledDatePicker from '@/components/input/StyledDatePicker';
 import StyledInput from '@/components/input/StyledInput';
 import PageLoader from '@/components/spinner/PageLoader';
-import { validateEmail } from '@/utils/validate';
+import { validateEmail, validatePhoneNumber } from '@/utils/validate';
 import { useQuery } from '@tanstack/react-query';
 import Form from 'next/form';
 import Link from 'next/link';
@@ -87,13 +87,14 @@ function SettingPage() {
     const phone = formData.get('phone') as string;
     // 驗證資料
     const emailError = validateEmail(email);
+    const phoneError = validatePhoneNumber(phone);
 
     if (emailError) {
       newErrors.email = emailError;
     }
 
-    if (phone.trim() && (phone.trim().length > 10 || phone.trim().length < 8)) {
-      newErrors.phone = 'Phone number is invalid';
+    if (phone && phoneError) {
+      newErrors.phone = phoneError;
     }
 
     setErrors(newErrors);

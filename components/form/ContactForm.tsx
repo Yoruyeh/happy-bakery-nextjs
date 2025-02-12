@@ -1,7 +1,7 @@
 'use client';
 
 import { contactAction } from '@/action/action';
-import { validateEmail } from '@/utils/validate';
+import { validateEmail, validatePhoneNumber } from '@/utils/validate';
 import Form from 'next/form';
 import { useState } from 'react';
 import StyledInput from '../input/StyledInput';
@@ -45,13 +45,19 @@ function ContactForm() {
     // 從 FormData 中取得值
 
     const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
     const comment = formData.get('comment') as string;
 
     // 驗證資料
     const emailError = validateEmail(email);
+    const phoneError = validatePhoneNumber(phone);
 
     if (emailError) {
       newErrors.email = emailError;
+    }
+
+    if (phone && phoneError) {
+      newErrors.phone = phoneError;
     }
 
     if (!comment.trim()) {
