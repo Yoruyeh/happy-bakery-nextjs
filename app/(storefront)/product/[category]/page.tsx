@@ -1,7 +1,7 @@
 import { ProductService } from '@/api/services/Product';
 import Link from 'next/link';
 import ProductList from '@/components/list/ProductList';
-import type { Metadata, ResolvingMetadata } from 'next';
+import type { Metadata } from 'next';
 
 type MetaDataProps = {
   params: Promise<{ category: string }>;

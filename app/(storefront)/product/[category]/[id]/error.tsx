@@ -1,26 +1,28 @@
+'use client';
+
 import Image from 'next/image';
-import NotFoundImage from '@/public/images/404.svg';
+import ErrorImage from '@/public/images/error.png';
 import Button from '@/components/button/Button';
 import Link from 'next/link';
 
-function NotFoundPage() {
+function ErrorPage() {
   return (
     <div className='flex flex-col items-center justify-center'>
-      <div className='relative w-full max-w-screen-sm pt-[100%] sm:pt-[80%] md:pt-[60%] lg:pt-[40%]'>
+      <div className='relative w-full max-w-screen-sm pt-[60%] sm:pt-[50%] md:pt-[40%] lg:pt-[30%]'>
         <Image
-          src={NotFoundImage}
-          alt='404'
+          src={ErrorImage}
+          alt='error'
           fill={true}
           sizes='640px'
-          className='object-contain'
+          className='object-cover'
         />
       </div>
       <div className='flex flex-col items-center justify-center gap-8 px-4 text-center text-text-brown'>
         <h1 className='text-lg font-bold md:text-2xl lg:text-3xl'>
-          Sorry, the page you are looking for does not exist.
+          Sorry, something went wrong.
         </h1>
         <p className='font-medium md:text-lg lg:text-xl'>
-          Please check the URL and try again.
+          Please try again later.
         </p>
         <Link href='/'>
           <Button
@@ -33,4 +35,4 @@ function NotFoundPage() {
   );
 }
 
-export default NotFoundPage;
+export default ErrorPage;

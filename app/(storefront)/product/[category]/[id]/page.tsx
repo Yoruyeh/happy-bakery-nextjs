@@ -5,6 +5,7 @@ import ProductSlides from '@/components/swiper/ProductSlides';
 import NewReleaseTag from '@/components/tag/NewReleaseTag';
 import { cookies } from 'next/headers';
 import type { Metadata, ResolvingMetadata } from 'next';
+import ErrorPage from './error';
 
 type MataDataProps = {
   params: Promise<{ id: string }>;
@@ -17,7 +18,9 @@ export async function generateMetadata({
   const id = (await params).id;
 
   // fetch data
-  const { product } = await ProductService.getProductDetail(Number(id));
+  const { status, product } = await ProductService.getProductDetail(Number(id));
+
+  if (status === 'error' || !product) return { title: 'Error' };
 
   return {
     title: product.name,
@@ -32,11 +35,13 @@ async function ProductDetailPage(props: { params: Params }) {
   const params = await props.params;
   const id = Number(params.id);
 
-  const { product } = await ProductService.getProductDetail(id);
+  const { status, product } = await ProductService.getProductDetail(id);
+
+  if (status === 'error' || !product) return <ErrorPage />;
 
   const images = [
-    { name: 'cover', image_path: product.cover },
-    ...product.ProductImages,
+    { name: 'cover', image_path: product?.cover },
+    ...product?.ProductImages,
   ];
 
   return (
