@@ -62,8 +62,7 @@ npx sequelize db:seed:all
 
 ```bash
 # api
-IMGUR_CLIENT_ID= your password
-JWT_SECRET= your password
+JWT_SECRET= YOUR_PASSWORD
 ```
 
 ```bash
