@@ -1,8 +1,8 @@
 # Welcome to Happy Bakery Website!
 
-<!-- ![前台](./src/assets/images/user.gif)
+![前台](./client/public/images/happy-bakery-storefront-small.gif)
 
-![後台](./src/assets/images/admin.gif) -->
+<!--![後台](./src/assets/images/admin.gif) -->
 
 ## Features
 
