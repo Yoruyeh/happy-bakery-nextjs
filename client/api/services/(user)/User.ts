@@ -1,26 +1,26 @@
 import { fetchWrapper } from '../../config/config';
 import {
-  LoginPayload,
-  LoginResponse,
-  RegisterPayload,
-  RegisterResponse,
+  UserLoginPayload,
+  UserLoginResponse,
+  UserRegisterPayload,
+  UserRegisterResponse,
   UserInfoResponse,
   UpdateUserInfoPayload,
   UpdateUserInfoResponse,
-  UpdatePasswordPayload,
-  UpdatePasswordResponse,
+  UpdateUserPasswordPayload,
+  UpdateUserPasswordResponse,
 } from '../../types/(user)/user';
 
 export const UserService = {
-  login: async (credentials: LoginPayload) => {
-    return fetchWrapper<LoginResponse>('/users/signin', {
+  login: async (credentials: UserLoginPayload) => {
+    return fetchWrapper<UserLoginResponse>('/users/signin', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
   },
 
-  register: async (credentials: RegisterPayload) => {
-    return fetchWrapper<RegisterResponse>('/users', {
+  register: async (credentials: UserRegisterPayload) => {
+    return fetchWrapper<UserRegisterResponse>('/users', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
@@ -37,8 +37,8 @@ export const UserService = {
     });
   },
 
-  updatePassword: async (payload: UpdatePasswordPayload) => {
-    return fetchWrapper<UpdatePasswordResponse>('/users/password', {
+  updatePassword: async (payload: UpdateUserPasswordPayload) => {
+    return fetchWrapper<UpdateUserPasswordResponse>('/users/password', {
       method: 'PUT',
       body: JSON.stringify(payload),
     });

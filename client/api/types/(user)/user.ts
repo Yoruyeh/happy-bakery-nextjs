@@ -1,4 +1,4 @@
-export interface LoginPayload {
+export interface UserLoginPayload {
   email: string;
   password: string;
 }
@@ -15,14 +15,14 @@ interface RegisterUser {
   cart_id: number;
 }
 
-export interface LoginResponse {
+export interface UserLoginResponse {
   status: 'success' | 'error';
   message: string;
   token?: string;
   user?: LoginUser;
 }
 
-export interface RegisterPayload {
+export interface UserRegisterPayload {
   firstName: string;
   lastName: string;
   email: string;
@@ -31,7 +31,7 @@ export interface RegisterPayload {
   gender: string;
 }
 
-export interface RegisterResponse {
+export interface UserRegisterResponse {
   status: 'success' | 'error';
   message: string;
   token?: string;
@@ -69,13 +69,13 @@ export interface UpdateUserInfoResponse {
   user: UserInfo;
 }
 
-export interface UpdatePasswordPayload {
+export interface UpdateUserPasswordPayload {
   currentPW: string;
   newPW: string;
   confirmPW: string;
 }
 
-export interface UpdatePasswordResponse {
+export interface UpdateUserPasswordResponse {
   status: 'success' | 'error';
   message: string;
 }
