@@ -1,4 +1,4 @@
-import { OrderService } from '@/api/services/Order';
+import { OrderService } from '@/api/services/(user)/Order';
 import Button from '@/components/button/Button';
 import CheckoutItem from '@/components/card/CheckoutItem';
 import OrderSummaryCollapse from '@/components/collapse/OrderSummaryCollapse';

@@ -4,10 +4,10 @@ import '../globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { cookies } from 'next/headers';
-import { ProductService } from '@/api/services/Product';
+import { ProductService } from '@/api/services/(user)/Product';
 import Providers from '@/provider/provider';
 import StoreInitializer from '@/store/StoreInitializer';
-import { CartService } from '@/api/services/Cart';
+import { CartService } from '@/api/services/(user)/Cart';
 
 const josefinSans = Josefin_Sans({
   variable: '--font-josefin-sans',

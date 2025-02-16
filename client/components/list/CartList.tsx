@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import CartItem from '../card/CartItem';
 import Button from '../button/Button';
-import { GetCartResponse } from '@/api/types/cart';
+import { GetCartResponse } from '@/api/types/(user)/cart';
 import { useQuery } from '@tanstack/react-query';
-import { CartService } from '@/api/services/Cart';
+import { CartService } from '@/api/services/(user)/Cart';
 
 interface CartListProps {
   initialCartData: GetCartResponse;

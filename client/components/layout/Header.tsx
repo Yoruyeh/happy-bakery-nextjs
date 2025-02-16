@@ -15,7 +15,7 @@ import { twMerge } from 'tailwind-merge';
 import smallLogo from '@/public/logo-small.png';
 import bigLogo from '@/public/logo-big.png';
 import Navbar from '@/components/navbar/Navbar';
-import { Category } from '@/api/types/product';
+import { Category } from '@/api/types/(user)/product';
 import Form from 'next/form';
 import { searchAction } from '@/action/action';
 import useStore from '@/store/store';

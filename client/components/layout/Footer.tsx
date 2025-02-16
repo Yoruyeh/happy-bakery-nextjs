@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
-import { Category } from '@/api/types/product';
+import { Category } from '@/api/types/(user)/product';
 import { usePathname } from 'next/navigation';
 
 interface FooterProps {

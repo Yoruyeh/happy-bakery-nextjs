@@ -1,10 +1,10 @@
-import { fetchWrapper } from '../config/config';
+import { fetchWrapper } from '../../config/config';
 import {
   ProductQuery,
   GetProductsResponse,
   GetCategoryResponse,
   GetProductDetailResponse,
-} from '../types/product';
+} from '../../types/(user)/product';
 
 export const ProductService = {
   getProducts: async (params: ProductQuery) => {

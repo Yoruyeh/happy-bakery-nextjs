@@ -1,6 +1,6 @@
 'use client';
 
-import { Product } from '@/api/types/product';
+import { Product } from '@/api/types/(user)/product';
 import { useEffect } from 'react';
 import useStore from './store';
 

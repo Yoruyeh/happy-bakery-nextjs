@@ -8,7 +8,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
-import { Category } from '@/api/types/product';
+import { Category } from '@/api/types/(user)/product';
 
 interface NavbarProps {
   token: string;

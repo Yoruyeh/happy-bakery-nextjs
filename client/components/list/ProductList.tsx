@@ -4,7 +4,7 @@ import Image from 'next/image';
 import CategoryBanner from '@/public/images/banner-category.jpg';
 import ProductCard from '../card/ProductCard';
 import Paginator from '../paginator/Paginator';
-import { GetProductsResponse } from '@/api/types/product';
+import { GetProductsResponse } from '@/api/types/(user)/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface ProductListProps {

@@ -1,4 +1,4 @@
-import { ProductService } from '@/api/services/Product';
+import { ProductService } from '@/api/services/(user)/Product';
 import AddToCartAction from '@/components/action/AddToCartAction';
 import ImageSwiper from '@/components/swiper/ImageSwiper';
 import ProductSlides from '@/components/swiper/ProductSlides';

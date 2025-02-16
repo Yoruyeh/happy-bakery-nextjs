@@ -11,7 +11,7 @@ import { twMerge } from 'tailwind-merge';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import OrderSummaryCollapse from '../collapse/OrderSummaryCollapse';
 import CheckoutItem from '../card/CheckoutItem';
-import { CartItemType } from '@/api/types/cart';
+import { CartItemType } from '@/api/types/(user)/cart';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import useStore from '@/store/store';

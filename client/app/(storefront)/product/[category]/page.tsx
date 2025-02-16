@@ -1,4 +1,4 @@
-import { ProductService } from '@/api/services/Product';
+import { ProductService } from '@/api/services/(user)/Product';
 import Link from 'next/link';
 import ProductList from '@/components/list/ProductList';
 import type { Metadata } from 'next';

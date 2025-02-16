@@ -1,6 +1,6 @@
 'use client';
 
-import { CartService } from '@/api/services/Cart';
+import { CartService } from '@/api/services/(user)/Cart';
 import CheckoutItem from '@/components/card/CheckoutItem';
 import OrderSummaryCollapse from '@/components/collapse/OrderSummaryCollapse';
 import CheckoutForm from '@/components/form/CheckoutForm';

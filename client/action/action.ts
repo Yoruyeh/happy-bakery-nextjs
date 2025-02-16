@@ -1,10 +1,10 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { UserService } from '../api/services/User';
+import { UserService } from '../api/services/(user)/User';
 import { redirect } from 'next/navigation';
-import { CreateOrderItem } from '@/api/types/order';
-import { OrderService } from '@/api/services/Order';
+import { CreateOrderItem } from '@/api/types/(user)/order';
+import { OrderService } from '@/api/services/(user)/Order';
 
 export async function loginAction(formData: globalThis.FormData) {
   // 從 FormData 中取得值

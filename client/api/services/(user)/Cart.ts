@@ -1,11 +1,11 @@
-import { fetchWrapper } from '../config/config';
+import { fetchWrapper } from '../../config/config';
 import {
   GetCartResponse,
   AddProductToCartPayload,
   AddToCartResponse,
   UpdateCartItemResponse,
   DeleteCartItemResponse,
-} from '../types/cart';
+} from '../../types/(user)/cart';
 
 export const CartService = {
   getCart: async () => {

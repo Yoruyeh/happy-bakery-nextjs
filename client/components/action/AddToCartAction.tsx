@@ -4,7 +4,7 @@ import QuantityInput from '@/components/input/QuantityInput';
 import Button from '../button/Button';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CartService } from '@/api/services/Cart';
+import { CartService } from '@/api/services/(user)/Cart';
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import useStore from '@/store/store';

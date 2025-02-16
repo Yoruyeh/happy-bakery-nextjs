@@ -2,7 +2,7 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
-import { Pagination } from '@/api/types/product';
+import { Pagination } from '@/api/types/(user)/product';
 import { useEffect, useState } from 'react';
 import { dynamicPageGenerator } from '@/utils/dynamicPageGenerator';
 

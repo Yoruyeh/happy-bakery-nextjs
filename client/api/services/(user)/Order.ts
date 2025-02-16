@@ -1,10 +1,10 @@
-import { fetchWrapper } from '../config/config';
+import { fetchWrapper } from '../../config/config';
 import {
   GetOrdersResponse,
   GetOrderDetailResponse,
   CreateOrderResponse,
   CreateOrderPayload,
-} from '../types/order';
+} from '../../types/(user)/order';
 
 export const OrderService = {
   getOrders: async () => {

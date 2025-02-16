@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import QuantityInputInCart from '../input/QuantityInputInCart';
-import { CartItemType } from '@/api/types/cart';
+import { CartItemType } from '@/api/types/(user)/cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CartService } from '@/api/services/Cart';
+import { CartService } from '@/api/services/(user)/Cart';
 import LoadingSpinner from '../spinner/LoadingSpinner';
 
 interface CartItemProps {

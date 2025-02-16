@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { CartItemType } from '@/api/types/cart';
+import { CartItemType } from '@/api/types/(user)/cart';
 
 interface CheckoutItemProps {
   checkoutItem: CartItemType;

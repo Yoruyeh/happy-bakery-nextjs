@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../config/config';
+import { fetchWrapper } from '../../config/config';
 import {
   LoginPayload,
   LoginResponse,
@@ -9,7 +9,7 @@ import {
   UpdateUserInfoResponse,
   UpdatePasswordPayload,
   UpdatePasswordResponse,
-} from '../types/user';
+} from '../../types/(user)/user';
 
 export const UserService = {
   login: async (credentials: LoginPayload) => {

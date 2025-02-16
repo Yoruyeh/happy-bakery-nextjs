@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 import Image from 'next/image';
-import { ProductImage } from '@/api/types/product';
+import { ProductImage } from '@/api/types/(user)/product';
 
 interface ImageSwiperProps {
   images: ProductImage[];

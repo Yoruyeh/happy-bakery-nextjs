@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Product } from '@/api/types/product';
+import { Product } from '@/api/types/(user)/product';
 
 interface StoreState {
   cartItemsCount: number;

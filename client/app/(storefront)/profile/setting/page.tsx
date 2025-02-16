@@ -1,7 +1,7 @@
 'use client';
 
 import { settingAction } from '@/action/action';
-import { UserService } from '@/api/services/User';
+import { UserService } from '@/api/services/(user)/User';
 import Button from '@/components/button/Button';
 import StyledDatePicker from '@/components/input/StyledDatePicker';
 import StyledInput from '@/components/input/StyledInput';
