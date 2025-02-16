@@ -11,7 +11,7 @@ function AdminLoginPage() {
       <h1 className='my-10 text-center text-3xl font-bold text-text-brown lg:text-5xl'>
         Admin Login
       </h1>
-      <LoginForm />
+      <LoginForm isAdmin={true} />
     </div>
   );
 }

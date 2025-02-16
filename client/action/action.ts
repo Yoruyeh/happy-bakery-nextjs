@@ -2,17 +2,23 @@
 
 import { cookies } from 'next/headers';
 import { UserService } from '../api/services/(user)/User';
+import { AdminService } from '@/api/services/(admin)/Admin';
 import { redirect } from 'next/navigation';
 import { CreateOrderItem } from '@/api/types/(user)/order';
 import { OrderService } from '@/api/services/(user)/Order';
 
-export async function loginAction(formData: globalThis.FormData) {
+export async function loginAction(
+  formData: globalThis.FormData,
+  isAdmin: boolean
+) {
   // 從 FormData 中取得值
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
+  let service = isAdmin ? AdminService : UserService;
+
   try {
-    const response = await UserService.login({ email, password });
+    const response = await service.login({ email, password });
     const cookieStore = await cookies();
 
     if (response.status === 'success' && response.token) {

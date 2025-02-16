@@ -12,7 +12,7 @@ const LoginPage = () => {
       <h1 className='mb-10 text-center text-3xl font-bold text-text-brown lg:text-5xl'>
         Login
       </h1>
-      <LoginForm />
+      <LoginForm isAdmin={false} />
       <Link
         href='/register'
         className='mt-5 flex items-center justify-center text-sm text-text-lightGray underline hover:text-text-darkGray lg:text-base'

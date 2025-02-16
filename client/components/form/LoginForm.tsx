@@ -9,6 +9,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import Button from '../button/Button';
 
+interface LoginFormProps {
+  isAdmin: boolean;
+}
+
 interface LoginFormValues {
   email: string;
   password: string;
@@ -19,7 +23,7 @@ interface LoginFormErrors {
   password?: string;
 }
 
-function LoginForm() {
+function LoginForm({ isAdmin }: LoginFormProps) {
   const [formValues, setFormValues] = useState<LoginFormValues>({
     email: '',
     password: '',
@@ -61,7 +65,8 @@ function LoginForm() {
   async function onSubmit(formData: globalThis.FormData) {
     if (!validateForm(formData)) return;
     setFormValues({ email: '', password: '' });
-    const result = await loginAction(formData);
+    const result = await loginAction(formData, isAdmin);
+    const redirectPath = isAdmin ? '/admin/dashboard' : '/';
 
     if (result.success) {
       toast.success('Login success', {
@@ -70,7 +75,7 @@ function LoginForm() {
       });
 
       setTimeout(() => {
-        router.push('/');
+        router.push(redirectPath);
       }, 1500);
     } else {
       toast.error('Login failed', {
