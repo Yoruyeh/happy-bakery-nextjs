@@ -14,10 +14,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: {
-    template: ' %s | Happy Bakery',
-    default: 'Happy Bakery',
-  },
+  title: 'Happy Bakery Dashboard',
   description:
     'Happy Bakery opened its doors in 2024, bringing a revolutionary approach to modern baking. Our vision was born from a simple yet powerful belief: desserts can be both delicious and nutritious.',
   generator: 'Next.js',
