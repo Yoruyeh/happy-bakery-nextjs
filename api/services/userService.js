@@ -70,8 +70,8 @@ const userService = {
     }
   },
 
-  getSetting: (id) => {
-    return User.findByPk(id, {
+  getSetting: async (id) => {
+    const user = await User.findByPk(id, {
       attributes: [
         'id',
         'firstName',
@@ -85,6 +85,12 @@ const userService = {
       raw: true,
       nest: true,
     });
+
+    return {
+      status: 'success',
+      message: 'get user info succeed',
+      user: user,
+    };
   },
 
   putSetting: async (id, data) => {
