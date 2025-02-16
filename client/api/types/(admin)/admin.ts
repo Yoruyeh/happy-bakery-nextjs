@@ -24,7 +24,9 @@ export interface AdminInfo {
 }
 
 export interface AdminInfoResponse {
-  user: AdminInfo;
+  status: 'success' | 'error';
+  message: string;
+  admin?: AdminInfo;
 }
 
 export interface UpdateAdminPasswordPayload {

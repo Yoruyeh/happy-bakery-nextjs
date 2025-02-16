@@ -62,8 +62,10 @@ export default async function RootLayout({
   let cartItemsCount = 0;
 
   if (token) {
-    const { cartItems } = await CartService.getCart();
-    cartItemsCount = cartItems.length;
+    const { status, cartItems } = await CartService.getCart();
+    if (status === 'success' && cartItems.length > 0) {
+      cartItemsCount = cartItems.length;
+    }
   }
 
   return (

@@ -50,7 +50,9 @@ export interface UserInfo {
 }
 
 export interface UserInfoResponse {
-  user: UserInfo;
+  status: 'success' | 'error';
+  message: string;
+  user?: UserInfo;
 }
 
 export interface UpdateUserInfoPayload {

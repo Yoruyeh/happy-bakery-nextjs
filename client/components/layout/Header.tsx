@@ -181,7 +181,7 @@ function Header({ token, categories }: HeaderProps) {
             }}
           >
             <ShoppingBagIcon className='h-6 w-6' />
-            {token && (
+            {token && cartItemsCount > 0 && (
               <span className='test-white absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-bgColor-newTag text-center text-xs font-semibold text-white'>
                 {cartItemsCount}
               </span>
