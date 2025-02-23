@@ -10,9 +10,10 @@ interface ProductCardProps {
 
 function ProductCard({ product, category }: ProductCardProps) {
   const newProducts = useStore((state) => state.newProducts);
+  const categoryName = category ?? product.Category.name.toLowerCase();
 
   return (
-    <Link href={`/product/${category}/${product.id}`}>
+    <Link href={`/product/${categoryName}/${product.id}`}>
       <div className='h-fit w-full overflow-hidden rounded-xl bg-white p-3 shadow-lg hover:bg-bgColor-card'>
         <div className='relative'>
           {newProducts.find((item) => item.id === product.id) && (
