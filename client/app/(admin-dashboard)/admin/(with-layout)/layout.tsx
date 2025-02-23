@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Josefin_Sans, Open_Sans } from 'next/font/google';
 import '@/app/globals.css';
 import Providers from '@/provider/provider';
+import AdminHeader from '@/components/layout/AdminHeader';
+import AdminNavbar from '@/components/navbar/AdminNavbar';
 
 const josefinSans = Josefin_Sans({
   variable: '--font-josefin-sans',
@@ -47,11 +49,13 @@ export default async function RootLayout({
     <html lang='en'>
       <Providers>
         <body
-          className={`${josefinSans.variable} ${openSans.variable} mx-auto flex h-fit min-h-screen w-screen flex-col overflow-x-hidden font-sans antialiased`}
+          className={`${josefinSans.variable} ${openSans.variable} flex h-fit min-h-screen w-screen overflow-x-hidden font-sans antialiased`}
         >
-          Layout
-          <main className='flex flex-1 flex-col px-6 py-4 md:px-8 md:py-8 lg:px-10 lg:py-10 lg:pr-12'>
-            {children}
+          <AdminNavbar />
+          <div className='w-20 bg-slate-200 sm:w-[160px] md:w-[200px] lg:w-[260px]' />
+          <main className='flex flex-1 flex-col'>
+            <AdminHeader />
+            <div className='h-full w-full p-6'>{children}</div>
           </main>
         </body>
       </Providers>
